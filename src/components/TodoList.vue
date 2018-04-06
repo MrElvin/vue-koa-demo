@@ -6,18 +6,26 @@
       v-model="todoToAdd">
     </el-input>
     <div class="state-btns">
-      <el-button size="mini" round>全部</el-button>
-      <el-button size="mini" round>待完成</el-button>
-      <el-button size="mini" round>已完成</el-button>
+      <el-radio-group v-model="filterStatus" size="small" text-color="#FFF" fill="#66D4EB">
+        <el-radio-button label="all">全部</el-radio-button>
+        <el-radio-button label="todo">待完成</el-radio-button>
+        <el-radio-button label="done">已完成</el-radio-button>
+      </el-radio-group>
     </div>
     <ul>
-      <li v-for="(item, index) in todoList" :key="index">
-        <div class="item-container" :class="item.state === 'todo' ? 'todo': 'done'">
-          <el-tag :type="item.state === 'todo' ? 'warning' : 'success'">{{ item.id }}</el-tag>
-          <p>{{ item.detail }}</p>
-          <!-- <input type="text"> -->
-          <el-button class="item-detail" type="primary" size="mini" plain @click="$router.push('/detail')">详情</el-button>
-          <el-button class="item-delete" type="danger" size="mini" plain>删除</el-button>
+      <li v-for="(item, index) in filteredList" :key="index">
+        <div @mouseover="item.btnShow = true" @mouseout="item.btnShow = false" class="item-container">
+          <p :class="item.state === 'todo' ? 'todo': 'done'">
+            <el-tag :type="item.state === 'todo' ? 'warning' : 'success'">{{ item.id }}</el-tag>
+            <span>{{ item.detail }}</span>
+            <!-- <input type="text"> -->
+          </p>
+          <transition name="fade">
+            <div class="item-btns" v-if="item.btnShow === true">
+              <el-button key="delete" class="item-delete" type="danger" size="mini" plain>删除</el-button>
+              <el-button key="detail" class="item-detail" type="primary" size="mini" plain @click="$router.push('/detail')">详情</el-button>
+            </div>
+          </transition>
         </div>
       </li>
     </ul>
@@ -28,66 +36,27 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data () {
     return {
       todoToAdd: '',
-      todoList: [
-        {
-          id: 1,
-          state: 'todo',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafd'
-        },
-        {
-          id: 2,
-          state: 'done',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafd'
-        },
-        {
-          id: 1,
-          state: 'todo',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafd'
-        },
-        {
-          id: 2,
-          state: 'done',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafd'
-        },
-        {
-          id: 1,
-          state: 'todo',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafd'
-        },
-        {
-          id: 2,
-          state: 'done',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafd'
-        },
-        {
-          id: 1,
-          state: 'todo',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafdasdfadfadfadfasdfdafd'
-        },
-        {
-          id: 2,
-          state: 'done',
-          time: 11111111,
-          detail: 'asdfadfadfadfasdfdafd'
-        }
-      ]
+      todoList: [],
+      filterStatus: 'all'
+    }
+  },
+  computed: {
+    filteredList () {
+      if (this.filterStatus === 'all') return this.todoList
+      return this.todoList.filter((todo) => {
+        return todo.state === this.filterStatus
+      })
     }
   },
   methods: {
     hackEleCss () {
       this.$nextTick(() => {
-        console.log('hack')
         const lis = document.querySelectorAll('.el-pager li')
         const btns = document.querySelectorAll('.el-pagination button')
         const array = [...lis, ...btns]
@@ -95,15 +64,28 @@ export default {
           item.style.backgroundColor = 'transparent'
         }
       })
+    },
+    getTodoList () {
+      axios.get('/api/todolist')
+        .then((res) => {
+          this.todoList = res.data.todoList
+        })
     }
   },
   mounted () {
     this.hackEleCss()
+    this.getTodoList()
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
 .todo-container {
   flex: 1 0 auto;
   display: flex;
@@ -117,7 +99,6 @@ export default {
   }
   ul {
     margin-top: 12px;
-    width: 480px;
     list-style: none;
     &::-webkit-scrollbar {
       display: none;
@@ -131,15 +112,23 @@ export default {
         margin-top: 0px;
       }
     }
-    .el-tag {
-      width: 40px;
-      float: left;
-      border: none;
-      border-top-right-radius: 0;
-      border-bottom-right-radius: 0;
-    }
     .item-container {
       height: 100%;
+      text-align: left;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    p {
+      text-align: left;
+      width: 500px;
+      display: inline-block;
+      line-height: 32px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: #666;
+      box-sizing: border-box;
+      padding-right: 16px;
       border-radius: 6px;
       cursor: pointer;
       &.todo {
@@ -148,30 +137,27 @@ export default {
       &.done {
         border: 1px solid #D8EDCD;
       }
+      .el-tag {
+        width: 40px;
+        float: left;
+        border: none;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+        text-align: center;
+        margin-right: 16px;
+      }
+    }
+    .item-btns {
+      position: absolute;
+      top: 3px;
+      right: -120px;
     }
     .item-detail,
     .item-delete {
-      position: absolute;
-      right: -70px;
-      top: 3px;
-      z-index: 1000;
+      float: right;
     }
-    .item-delete {
-      right: -130px;
-    }
-    p {
-      text-align: left;
-      width: 422px;
-      display: inline-block;
-      line-height: 32px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      margin-left: 16px;
-      color: #666;
-      box-sizing: border-box;
-      padding-right: 10px;
-      font-size: 14px;
+    .item-detail {
+      margin-right: 4px;
     }
     input {
       width: 422px;
@@ -179,13 +165,10 @@ export default {
       outline: none;
       height: 100%;
       line-height: 32px;
-      margin-left: 16px;
       border-top-right-radius: 6px;
       border-bottom-right-radius: 6px;
       color: #666;
       box-sizing: border-box;
-      padding-right: 10px;
-      font-size: 14px;
       background: transparent;
     }
   }
