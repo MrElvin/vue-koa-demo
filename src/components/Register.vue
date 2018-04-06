@@ -5,10 +5,10 @@
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="密 码">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.pwd"></el-input>
       </el-form-item>
       <el-form-item label="确认密码">
-        <el-input v-model="form.name"></el-input>
+        <el-input v-model="form.repwd"></el-input>
       </el-form-item>
       <div class="btns">
         <el-button @click="$router.push('/login')">取消注册</el-button>
@@ -23,7 +23,9 @@ export default {
   data () {
     return {
       form: {
-        name: ''
+        name: '',
+        pwd: '',
+        repwd: ''
       }
     }
   }

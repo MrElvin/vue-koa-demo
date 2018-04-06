@@ -68,6 +68,7 @@ export default {
     getTodoList () {
       axios.get('/api/todolist')
         .then((res) => {
+          res.data.todoList.forEach((todo) => { todo.btnShow = false })
           this.todoList = res.data.todoList
         })
     }
