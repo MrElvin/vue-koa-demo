@@ -2,25 +2,47 @@ const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
+const cors = require('kcors')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
+const session = require('koa-session')
+
+const path = require('path')
 
 const index = require('./routes/index')
-const users = require('./routes/users')
+
+app.keys = ['vue koa todo demo']
+
+const CONFIG = {
+  key: 'koa:todo',
+  maxAge: 86400000,
+  overwrite: true,
+  httpOnly: true,
+  signed: true,
+  rolling: false,
+  renew: false
+}
 
 // error handler
 onerror(app)
 
+// 允许跨域
+app.use(cors({
+  credentials: true
+}))
+
+app.use(session(CONFIG, app))
+
 // middlewares
 app.use(bodyparser({
-  enableTypes:['json', 'form', 'text']
+  enableTypes: ['json', 'form', 'text']
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(__dirname + '/public'))
+app.use(require('koa-static')(path.resolve(__dirname, '/public')))
 
-app.use(views(__dirname + '/views', {
+app.use(views(path.resolve(__dirname, '/views'), {
   extension: 'pug'
 }))
 
@@ -34,11 +56,10 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
-app.use(users.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {
   console.error('server error', err, ctx)
-});
+})
 
 module.exports = app

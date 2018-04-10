@@ -1,28 +1,96 @@
 <template>
   <div class="login">
-    <el-form ref="form" :model="form" label-width="60px">
-      <el-form-item label="用户名">
+    <el-form ref="form" status-icon :model="form" :rules="loginRules" label-width="70px">
+      <el-form-item label="用户名" prop="name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="密 码">
-        <el-input v-model="form.name"></el-input>
+      <el-form-item label="密 码" prop="pwd">
+        <el-input type="password" v-model="form.pwd"></el-input>
       </el-form-item>
       <div class="btns">
         <el-button @click="$router.push('/register')">注 册</el-button>
-        <el-button type="primary">登 录</el-button>
+        <el-button @click="login" type="primary">登 录</el-button>
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
+import axios from '../util/axios'
+
 export default {
   data () {
+    const validateUser = (rule, value, callback) => {
+      axios.post('/api/login/name', this.form)
+        .then((res) => {
+          if (!res.data.success) callback(new Error('用户名不存在'))
+          else callback()
+        })
+        .catch((err) => console.log(err))
+    }
     return {
+      username: '',
       form: {
-        name: ''
+        name: '',
+        pwd: ''
+      },
+      loginRules: {
+        name: [
+          { required: true, message: '用户名不能为空', trigger: 'blur' },
+          { validator: validateUser, trigger: 'blur' }
+        ],
+        pwd: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
       }
     }
+  },
+  methods: {
+    login () {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          axios.post('/api/login', this.form)
+            .then((res) => {
+              if (res.data.success) {
+                this.$message({
+                  message: '登录成功 😛',
+                  type: 'success',
+                  duration: 1500
+                })
+                setTimeout(() => {
+                  this.$router.push('/todo')
+                }, 1000)
+              } else {
+                this.$message.error({
+                  message: res.data.msg,
+                  duration: 1500
+                })
+                this.resetForm('form')
+              }
+            })
+            .catch((err) => { console.log(err) })
+        }
+        return false
+      })
+    },
+    resetForm (formName) {
+      this.$refs[formName].resetFields()
+    },
+    checkHasLogin () {
+      axios.get('/api/login/hasLogin')
+        .then((res) => {
+          if (res.success) {
+            this.username = res.success.msg
+            this.$router.replace('/todo')
+          } else {
+            this.username = ''
+            this.$router.replace('/')
+          }
+        })
+        .catch((err) => { console.log(err) })
+    }
+  },
+  mounted () {
+    console.log('login mount')
+    this.checkHasLogin()
   }
 }
 </script>

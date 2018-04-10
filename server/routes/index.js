@@ -1,19 +1,15 @@
 const router = require('koa-router')()
+const register = require('./register')
+const login = require('./login')
 
-router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
-})
+const mongoose = require('mongoose')
 
-router.get('/string', async (ctx, next) => {
-  ctx.body = 'koa2 string'
-})
+mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos')
+mongoose.connection.on('connected', () => { console.log('MongoDB connected success') })
+mongoose.connection.on('error', () => { console.log('MongoDB connected fail') })
+mongoose.connection.on('disconnected', () => { console.log('MongoDB connected disconnected') })
 
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 json'
-  }
-})
+router.post('/api/register', register)
+router.use('/api/login', login.routes(), login.allowedMethods())
 
 module.exports = router

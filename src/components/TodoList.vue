@@ -29,14 +29,14 @@
         </div>
       </li>
     </ul>
-    <div class="pagination-container" @click="hackEleCss">
+    <div class="pagination-container">
       <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   data () {
@@ -55,30 +55,31 @@ export default {
     }
   },
   methods: {
-    hackEleCss () {
-      this.$nextTick(() => {
-        const lis = document.querySelectorAll('.el-pager li')
-        const btns = document.querySelectorAll('.el-pagination button')
-        const array = [...lis, ...btns]
-        for (let item of array) {
-          item.style.backgroundColor = 'transparent'
-        }
-      })
-    },
     getTodoList () {
-      axios.get('/api/todolist')
-        .then((res) => {
-          res.data.todoList.forEach((todo) => { todo.btnShow = false })
-          this.todoList = res.data.todoList
-        })
+      // axios.get('/api/todolist')
+      //   .then((res) => {
+      //     res.data.todoList.forEach((todo) => { todo.btnShow = false })
+      //     this.todoList = res.data.todoList
+      //   })
     }
   },
   mounted () {
-    this.hackEleCss()
     this.getTodoList()
   }
 }
 </script>
+
+<style>
+.el-pagination .btn-prev,
+.el-pagination .btn-prev.disabled,
+.el-pagination .btn-next,
+.el-pagination .btn-next.disabled {
+  background-color: transparent;
+}
+.el-pager li {
+  background-color: transparent;
+}
+</style>
 
 <style lang="scss" scoped>
 .fade-enter-active, .fade-leave-active {
