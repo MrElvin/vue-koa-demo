@@ -9,7 +9,7 @@
 <script>
 import TodoHeader from '@/components/Todoheader'
 import TodoFooter from '@/components/TodoFooter'
-import axios from './util/axios'
+// import axios from './util/axios'
 
 export default {
   name: 'App',

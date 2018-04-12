@@ -36,7 +36,7 @@
 </template>
 
 <script>
-// import axios from 'axios'
+import axios from '../util/axios'
 
 export default {
   data () {
@@ -61,10 +61,25 @@ export default {
       //     res.data.todoList.forEach((todo) => { todo.btnShow = false })
       //     this.todoList = res.data.todoList
       //   })
+    },
+    checkHasLogin () {
+      axios.get('/api/login/hasLogin')
+        .then((res) => {
+          if (res.success) {
+            this.username = res.success.msg
+            console.log('username ok')
+          } else {
+            this.username = ''
+            console.log('username fail')
+            this.$router.replace('/login')
+          }
+        })
+        .catch((err) => { console.log(err) })
     }
   },
   mounted () {
-    this.getTodoList()
+    console.log('todolist mount')
+    this.checkHasLogin()
   }
 }
 </script>

@@ -29,9 +29,9 @@ onerror(app)
 
 // 允许跨域
 app.use(cors({
+  origin: 'http://localhost:8080',
   credentials: true
 }))
-
 app.use(session(CONFIG, app))
 
 // middlewares

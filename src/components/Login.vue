@@ -21,12 +21,23 @@ import axios from '../util/axios'
 export default {
   data () {
     const validateUser = (rule, value, callback) => {
-      axios.post('/api/login/name', this.form)
-        .then((res) => {
-          if (!res.data.success) callback(new Error('用户名不存在'))
-          else callback()
-        })
-        .catch((err) => console.log(err))
+      if (value === '') {
+        callback(new Error('用户名不能为空'))
+      } else {
+        axios.post('/api/login/name', this.form)
+          .then((res) => {
+            if (!res.data.success) callback(new Error('用户名不存在'))
+            else callback()
+          })
+          .catch((err) => console.log(err))
+      }
+    }
+    const validatePwd = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error('密码不能为空'))
+      } else {
+        callback()
+      }
     }
     return {
       username: '',
@@ -35,11 +46,8 @@ export default {
         pwd: ''
       },
       loginRules: {
-        name: [
-          { required: true, message: '用户名不能为空', trigger: 'blur' },
-          { validator: validateUser, trigger: 'blur' }
-        ],
-        pwd: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
+        name: [{ validator: validateUser, trigger: 'blur' }],
+        pwd: [{ validator: validatePwd, trigger: 'blur' }]
       }
     }
   },
@@ -73,25 +81,25 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
-    },
-    checkHasLogin () {
-      axios.get('/api/login/hasLogin')
-        .then((res) => {
-          if (res.success) {
-            this.username = res.success.msg
-            this.$router.replace('/todo')
-          } else {
-            this.username = ''
-            this.$router.replace('/')
-          }
-        })
-        .catch((err) => { console.log(err) })
     }
-  },
-  mounted () {
-    console.log('login mount')
-    this.checkHasLogin()
+    // checkHasLogin () {
+    //   axios.get('/api/login/hasLogin')
+    //     .then((res) => {
+    //       if (res.success) {
+    //         this.username = res.success.msg
+    //         this.$router.replace('/todo')
+    //       } else {
+    //         this.username = ''
+    //         this.$router.replace('/')
+    //       }
+    //     })
+    //     .catch((err) => { console.log(err) })
+    // }
   }
+  // mounted () {
+  //   console.log('login mount')
+  //   this.checkHasLogin()
+  // }
 }
 </script>
 

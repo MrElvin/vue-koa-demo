@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "vue-koa",
+      "script": "./server/bin/www",
+      "watch": ["server"],
+      "ignore_watch": ["node_modules"],
+      "log_date_format": "YYYY-MM=DD HH:mm:ss"
+    }
+  ]
+}

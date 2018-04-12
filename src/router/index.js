@@ -11,8 +11,8 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: Login
+      name: 'todo',
+      component: TodoList
     },
     {
       path: '/login',
