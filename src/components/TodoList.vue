@@ -43,7 +43,8 @@ export default {
     return {
       todoToAdd: '',
       todoList: [],
-      filterStatus: 'all'
+      filterStatus: 'all',
+      username: ''
     }
   },
   computed: {
@@ -56,17 +57,18 @@ export default {
   },
   methods: {
     getTodoList () {
-      // axios.get('/api/todolist')
-      //   .then((res) => {
-      //     res.data.todoList.forEach((todo) => { todo.btnShow = false })
-      //     this.todoList = res.data.todoList
-      //   })
     },
     checkHasLogin () {
       axios.get('/api/login/hasLogin')
         .then((res) => {
-          if (res.success) {
-            this.username = res.success.msg
+          console.log(JSON.stringify(res.data))
+          if (res.data.success) {
+            this.username = res.data.msg
+            this.$message({
+              message: `Welcome ${this.username}!`,
+              type: 'success',
+              duration: 1500
+            })
             console.log('username ok')
           } else {
             this.username = ''
@@ -89,10 +91,10 @@ export default {
 .el-pagination .btn-prev.disabled,
 .el-pagination .btn-next,
 .el-pagination .btn-next.disabled {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 .el-pager li {
-  background-color: transparent;
+  background-color: transparent !important;
 }
 </style>
 

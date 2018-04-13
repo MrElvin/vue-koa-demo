@@ -11,7 +11,7 @@ const checkLoginName = async (ctx, next) => {
   }
 }
 
-const checkLogin = async (ctx, next) => {
+const login = async (ctx, next) => {
   const { name, pwd } = ctx.request.body
   const userDoc = await User.findOne({ userId: name })
   if (userDoc) {
@@ -19,12 +19,12 @@ const checkLogin = async (ctx, next) => {
       console.log('userId', userDoc.userId)
       ctx.session.userName = userDoc.userId
       console.log('session userId', ctx.session.userName)
-      ctx.body = { success: true, msg: '' }
+      ctx.body = { success: true, msg: '', userName: ctx.session.userName }
     } else {
-      ctx.body = { success: false, msg: '密码错误' }
+      ctx.body = { success: false, msg: '密码错误', userName: '' }
     }
   } else {
-    ctx.body = { success: false, msg: '用户名不存在' }
+    ctx.body = { success: false, msg: '用户名不存在', userName: '' }
   }
 }
 
@@ -44,7 +44,7 @@ const checkHasLogin = async (ctx, next) => {
 }
 
 router.get('/hasLogin', checkHasLogin)
-router.post('/', checkLogin)
+router.post('/', login)
 router.post('/name', checkLoginName)
 
 module.exports = router

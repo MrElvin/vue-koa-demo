@@ -82,24 +82,7 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
-    // checkHasLogin () {
-    //   axios.get('/api/login/hasLogin')
-    //     .then((res) => {
-    //       if (res.success) {
-    //         this.username = res.success.msg
-    //         this.$router.replace('/todo')
-    //       } else {
-    //         this.username = ''
-    //         this.$router.replace('/')
-    //       }
-    //     })
-    //     .catch((err) => { console.log(err) })
-    // }
   }
-  // mounted () {
-  //   console.log('login mount')
-  //   this.checkHasLogin()
-  // }
 }
 </script>
 

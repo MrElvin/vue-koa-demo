@@ -2,7 +2,6 @@ const Koa = require('koa')
 const app = new Koa()
 const views = require('koa-views')
 const json = require('koa-json')
-const cors = require('kcors')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
@@ -27,11 +26,6 @@ const CONFIG = {
 // error handler
 onerror(app)
 
-// 允许跨域
-app.use(cors({
-  origin: 'http://localhost:8080',
-  credentials: true
-}))
 app.use(session(CONFIG, app))
 
 // middlewares
@@ -40,10 +34,10 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(path.resolve(__dirname, '/public')))
+app.use(require('koa-static')(path.join(__dirname, '/public')))
 
 app.use(views(path.resolve(__dirname, '/views'), {
-  extension: 'pug'
+  extension: 'html'
 }))
 
 // logger
