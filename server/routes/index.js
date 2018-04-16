@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 const register = require('./register')
 const login = require('./login')
+const logout = require('./logout')
 
 const mongoose = require('mongoose')
 
@@ -11,5 +12,6 @@ mongoose.connection.on('disconnected', () => { console.log('MongoDB connected di
 
 router.post('/api/register', register)
 router.use('/api/login', login.routes(), login.allowedMethods())
+router.get('/api/logout', logout)
 
 module.exports = router

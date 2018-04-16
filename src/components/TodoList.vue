@@ -43,8 +43,7 @@ export default {
     return {
       todoToAdd: '',
       todoList: [],
-      filterStatus: 'all',
-      username: ''
+      filterStatus: 'all'
     }
   },
   computed: {
@@ -61,18 +60,14 @@ export default {
     checkHasLogin () {
       axios.get('/api/login/hasLogin')
         .then((res) => {
-          console.log(JSON.stringify(res.data))
+          sessionStorage.username = res.data.msg
+          sessionStorage.hasLogin = true
+          this.$emit('setUserName', { username: res.data.msg })
           if (res.data.success) {
-            this.username = res.data.msg
-            this.$message({
-              message: `Welcome ${this.username}!`,
-              type: 'success',
-              duration: 1500
-            })
-            console.log('username ok')
+            if (!sessionStorage.hasLogin) {
+              this.$message({ message: `Welcome ${res.data.msg}!`, type: 'success', duration: 1500 })
+            }
           } else {
-            this.username = ''
-            console.log('username fail')
             this.$router.replace('/login')
           }
         })
@@ -80,7 +75,6 @@ export default {
     }
   },
   mounted () {
-    console.log('todolist mount')
     this.checkHasLogin()
   }
 }

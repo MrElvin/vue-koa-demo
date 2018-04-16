@@ -16,9 +16,7 @@ const login = async (ctx, next) => {
   const userDoc = await User.findOne({ userId: name })
   if (userDoc) {
     if (userDoc.userPwd === pwd) {
-      console.log('userId', userDoc.userId)
       ctx.session.userName = userDoc.userId
-      console.log('session userId', ctx.session.userName)
       ctx.body = { success: true, msg: '', userName: ctx.session.userName }
     } else {
       ctx.body = { success: false, msg: '密码错误', userName: '' }
@@ -29,7 +27,6 @@ const login = async (ctx, next) => {
 }
 
 const checkHasLogin = async (ctx, next) => {
-  console.log(ctx.session.userName)
   if (ctx.session.userName) {
     ctx.body = {
       success: true,
@@ -43,8 +40,8 @@ const checkHasLogin = async (ctx, next) => {
   }
 }
 
-router.get('/hasLogin', checkHasLogin)
 router.post('/', login)
+router.get('/hasLogin', checkHasLogin)
 router.post('/name', checkLoginName)
 
 module.exports = router

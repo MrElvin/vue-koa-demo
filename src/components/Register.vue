@@ -97,6 +97,11 @@ export default {
     resetForm (formName) {
       this.$refs[formName].resetFields()
     }
+  },
+  created () {
+    if (sessionStorage.username) {
+      this.$router.replace('/todo')
+    }
   }
 }
 </script>

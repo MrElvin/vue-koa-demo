@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <todo-header :username="username"/>
-    <router-view/>
+    <todo-header :username="username" @setUserName="setUserName"/>
+    <router-view @setUserName="setUserName"/>
     <todo-footer/>
   </div>
 </template>
@@ -9,13 +9,23 @@
 <script>
 import TodoHeader from '@/components/Todoheader'
 import TodoFooter from '@/components/TodoFooter'
-// import axios from './util/axios'
 
 export default {
   name: 'App',
   data () {
     return {
-      username: ''
+      username: sessionStorage.username || ''
+    }
+  },
+  methods: {
+    setUserName (payload) {
+      console.log(payload.username)
+      this.username = payload.username
+    }
+  },
+  created () {
+    if (sessionStorage.username) {
+      this.$router.replace('/todo')
     }
   },
   components: {

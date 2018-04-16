@@ -40,7 +40,6 @@ export default {
       }
     }
     return {
-      username: '',
       form: {
         name: '',
         pwd: ''
@@ -58,19 +57,12 @@ export default {
           axios.post('/api/login', this.form)
             .then((res) => {
               if (res.data.success) {
-                this.$message({
-                  message: '登录成功 😛',
-                  type: 'success',
-                  duration: 1500
-                })
+                this.$message({ message: '登录成功 😛', type: 'success', duration: 1500 })
                 setTimeout(() => {
                   this.$router.push('/todo')
                 }, 1000)
               } else {
-                this.$message.error({
-                  message: res.data.msg,
-                  duration: 1500
-                })
+                this.$message.error({ message: res.data.msg, duration: 1500 })
                 this.resetForm('form')
               }
             })
@@ -81,6 +73,11 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    }
+  },
+  created () {
+    if (sessionStorage.username) {
+      this.$router.replace('/todo')
     }
   }
 }

@@ -6,19 +6,34 @@
 </template>
 
 <script>
+import axios from '../util/axios'
+
 export default {
   name: 'todo',
-  props: {
-    username: String
-  },
   data () {
     return {
       logoutPic: '/static/images/logout.png'
     }
   },
+  props: {
+    username: String
+  },
   methods: {
     logout () {
-      console.log('log out')
+      axios.get('/api/logout')
+        .then((res) => {
+          if (res.data.success) {
+            this.$emit('setUserName', { username: '' })
+            this.$message({ message: '注销成功 😛', type: 'success', duration: 1500 })
+            sessionStorage.username = ''
+            sessionStorage.hasLogin = false
+            this.$router.replace('/login')
+          }
+        })
+        .catch((err) => {
+          this.$message.error({ message: '注销失败', duration: 1500 })
+          console.log(err)
+        })
     }
   }
 }
