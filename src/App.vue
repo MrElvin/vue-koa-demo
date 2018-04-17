@@ -19,7 +19,6 @@ export default {
   },
   methods: {
     setUserName (payload) {
-      console.log(payload.username)
       this.username = payload.username
     }
   },

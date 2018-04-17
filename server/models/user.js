@@ -5,7 +5,6 @@ const userSchema = new Schema({
   'userId': String,
   'userPwd': String,
   'userTodoList': [{
-    'todoId': String,
     'todoTime': String,
     'todoState': String,
     'todoDetail': String

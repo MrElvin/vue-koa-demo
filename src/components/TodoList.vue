@@ -2,8 +2,9 @@
   <div class="todo-container">
     <el-input class="todo-input" type="textarea" :rows="2" autofocus
       resize="none"
-      placeholder="请输入待办事项，回车键添加"
-      v-model="todoToAdd">
+      placeholder="请输入待办事项，Ctrl + Enter 添加"
+      v-model="todoToAdd"
+      @keyup.ctrl.enter.native="submitTodo">
     </el-input>
     <div class="state-btns">
       <el-radio-group v-model="filterStatus" size="small" text-color="#FFF" fill="#66D4EB">
@@ -15,15 +16,15 @@
     <ul>
       <li v-for="(item, index) in filteredList" :key="index">
         <div @mouseover="item.btnShow = true" @mouseout="item.btnShow = false" class="item-container">
-          <p :class="item.state === 'todo' ? 'todo': 'done'">
-            <el-tag :type="item.state === 'todo' ? 'warning' : 'success'">{{ item.id }}</el-tag>
-            <span>{{ item.detail }}</span>
+          <p :class="item.todoState === 'todo' ? 'todo': 'done'">
+            <el-tag :type="item.todoState === 'todo' ? 'warning' : 'success'">{{ index + 1 }}</el-tag>
+            <span>{{ item.todoDetail }}</span>
             <!-- <input type="text"> -->
           </p>
           <transition name="fade">
             <div class="item-btns" v-if="item.btnShow === true">
-              <el-button key="delete" class="item-delete" type="danger" size="mini" plain>删除</el-button>
-              <el-button key="detail" class="item-detail" type="primary" size="mini" plain @click="$router.push('/detail')">详情</el-button>
+              <el-button @click="completeTodo(item)" key="delete" class="item-delete" type="danger" size="mini" plain>完成</el-button>
+              <el-button @click="$router.push(`/detail/${item._id}`)" key="detail" class="item-detail" type="primary" size="mini" plain>详情</el-button>
             </div>
           </transition>
         </div>
@@ -50,13 +51,11 @@ export default {
     filteredList () {
       if (this.filterStatus === 'all') return this.todoList
       return this.todoList.filter((todo) => {
-        return todo.state === this.filterStatus
+        return todo.todoState === this.filterStatus
       })
     }
   },
   methods: {
-    getTodoList () {
-    },
     checkHasLogin () {
       axios.get('/api/login/hasLogin')
         .then((res) => {
@@ -67,11 +66,47 @@ export default {
             if (!sessionStorage.hasLogin) {
               this.$message({ message: `Welcome ${res.data.msg}!`, type: 'success', duration: 1500 })
             }
+            this.getTodoList()
           } else {
             this.$router.replace('/login')
           }
         })
         .catch((err) => { console.log(err) })
+    },
+    submitTodo () {
+      axios.post(`/api/todo/add`, { todoDetail: this.todoToAdd, todoTime: Date.now() })
+        .then(res => {
+          if (res.data.success) this.$message({ message: res.data.msg, type: 'success', duration: 1500 })
+          else this.$message.error({ message: res.data.msg, duration: 1500 })
+          this.todoToAdd = ''
+          this.getTodoList()
+        })
+        .catch(err => { console.log(err) })
+    },
+    getTodoList () {
+      axios.get(`/api/todo/get`)
+        .then(res => {
+          res.data.todoList.forEach(todo => { todo.btnShow = false })
+          this.todoList = res.data.todoList
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message.error({ message: '获取事项列表失败', duration: 1500 })
+        })
+    },
+    completeTodo (item) {
+      axios.post(`/api/todo/done/${item._id}`)
+        .then(res => {
+          if (res.data.success) {
+            this.getTodoList()
+            return this.$message({ message: '操作事项成功', type: 'success', duration: 1500 })
+          }
+          this.$message.error({ message: '操作事项失败', duration: 1500 })
+        })
+        .catch(err => {
+          console.log(err)
+          this.$message.error({ message: '操作事项失败', duration: 1500 })
+        })
     }
   },
   mounted () {

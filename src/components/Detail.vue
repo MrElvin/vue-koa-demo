@@ -8,21 +8,41 @@
         <p class="detail-content">{{ detailTodo.detail }}</p>
         <!-- <el-input class="detail-textarea" resize="none" :rows="15" type="textarea" v-model="detailTodo.detail"/> -->
       </el-form-item>
-      <img src="../assets/complete.png" alt="已完成">
-      <i @click="$router.push('/todo')"></i>
+      <img src="../assets/complete.png" alt="已完成" v-if="detailTodo.status === 'done'">
+      <i @click="$router.replace('/todo')"></i>
     </el-form>
   </div>
 </template>
 
 <script>
+import axios from '../util/axios'
+import moment from 'moment'
+
 export default {
   data () {
     return {
       detailTodo: {
-        time: '2',
-        detail: 'adfadfaadfadfasd fadfadfasdfadfadfasdfad fadfadfasdfadfadfasdfadfadfadfasdfadfa dfasdfadfadfadfasdfadfa dfasdfadfadfadfasdfadfadfasdfad fadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfadfadfasdfsdf'
+        time: '',
+        detail: '',
+        status: 'todo'
       }
     }
+  },
+  created () {
+    axios.get(`/api/todo/detail/${this.$route.params.todoId}`)
+      .then(res => {
+        console.log(res.data)
+        this.detailTodo.detail = res.data.todo.todoDetail
+        this.detailTodo.time = moment(Number(res.data.todo.todoTime)).format(`YYYY 年 MM 月 DD 日 hh:mm a`)
+        this.detailTodo.status = res.data.todo.todoState
+      })
+      .catch(err => {
+        console.log(err)
+        this.$message.error({ message: '事项详情获取失败', duration: 1500 })
+        setTimeout(() => {
+          this.$router.push('/todo')
+        }, 1000)
+      })
   }
 }
 </script>
@@ -47,6 +67,9 @@ img {
   background: white;
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, .1);
   position: relative;
+  p {
+    height: 42px;
+  }
   .el-input:focus {
     border-color: none;
   }

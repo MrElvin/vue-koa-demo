@@ -30,7 +30,7 @@ export default new Router({
       component: TodoList
     },
     {
-      path: '/detail',
+      path: '/detail/:todoId',
       name: 'detail',
       component: Detail
     }
