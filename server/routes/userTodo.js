@@ -1,43 +1,42 @@
 const router = require('koa-router')()
-const User = require('../models/user')
+const Todo = require('../models/todo')
 const mongoose = require('mongoose')
 
 const add = async (ctx, next) => {
   const { todoDetail, todoTime } = ctx.request.body
   const userId = ctx.session.userName
-  const userDoc = await User.findOne({ userId })
-  if (userDoc) {
-    userDoc.userTodoList.push({
-      todoTime,
-      todoState: 'todo',
-      todoDetail
-    })
-    const savedTodo = await userDoc.save()
-    if (savedTodo) {
-      ctx.body = { success: true, msg: '添加日程成功' }
-    } else {
-      ctx.body = { success: false, msg: '添加日程失败' }
-    }
+  const todoDoc = await Todo.create({
+    userId,
+    todoTime,
+    todoDetail,
+    todoState: 'todo'
+  })
+  const result = await todoDoc.save()
+  if (result) {
+    ctx.body = { success: true, msg: '添加日程成功' }
   } else {
-    ctx.body = { success: false, msg: '用户不存在' }
+    ctx.body = { success: false, msg: '添加日程失败' }
   }
 }
 const get = async (ctx, next) => {
   const userId = ctx.session.userName
-  const userDoc = await User.findOne({ userId })
-  if (userDoc) {
-    if (userDoc.userTodoList.length) {
-      ctx.body = { success: true, todoList: userDoc.userTodoList }
-    } else {
-      ctx.body = { success: true, todoList: [] }
-    }
+  const todoDoc = await Todo.find({ userId })
+  if (todoDoc.length) {
+    ctx.body = { success: true, todoList: todoDoc }
+  } else {
+    ctx.body = { success: true, todoList: [] }
   }
 }
-const done = async (ctx, next) => {
+const toggledone = async (ctx, next) => {
+  console.log(ctx.request.body)
   try {
-    await User.update({ 'userId': ctx.session.userName, 'userTodoList._id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'userTodoList.$.todoState': 'done' } })
-    const userDoc = await User.findOne({ userId: ctx.session.userName })
-    ctx.body = { success: true, todoList: userDoc.userTodoList }
+    if (ctx.request.body.todoState === 'todo') {
+      await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'done' } })
+    } else {
+      await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'todo' } })
+    }
+    const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
+    ctx.body = { success: true, todoList: todoDoc }
   } catch (err) {
     console.log(err)
     ctx.body = { success: false, todoList: [] }
@@ -45,24 +44,29 @@ const done = async (ctx, next) => {
 }
 const detail = async (ctx, next) => {
   try {
-    let theTodo = null
-    const userDoc = await User.findOne({ 'userId': ctx.session.userName })
-    userDoc.userTodoList.forEach(todo => {
-      if (todo._id.toString() === ctx.params['todoId']) {
-        theTodo = todo
-      }
-    })
-    await userDoc.save()
-    ctx.body = { success: true, todo: theTodo }
+    const todoDoc = await Todo.findOne({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) })
+    ctx.body = { success: true, todo: todoDoc }
   } catch (err) {
     console.log(err)
     ctx.body = { success: false, todo: null }
   }
 }
+const updateDetail = async (ctx, next) => {
+  const { _id, todoDetail } = ctx.request.body
+  try {
+    await Todo.update({ '_id': mongoose.Types.ObjectId(_id) }, { $set: { 'todoDetail': todoDetail } })
+    const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
+    ctx.body = { success: true, todoList: todoDoc }
+  } catch (err) {
+    console.log(err)
+    ctx.body = { success: false, todoList: [] }
+  }
+}
 
 router.post('/add', add)
 router.get('/get', get)
-router.post('/done/:todoId', done)
+router.post('/update', updateDetail)
+router.post('/done/:todoId', toggledone)
 router.get('/detail/:todoId', detail)
 
 module.exports = router

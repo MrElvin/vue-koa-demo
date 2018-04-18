@@ -16,14 +16,15 @@
     <ul>
       <li v-for="(item, index) in filteredList" :key="index">
         <div @mouseover="item.btnShow = true" @mouseout="item.btnShow = false" class="item-container">
-          <p :class="item.todoState === 'todo' ? 'todo': 'done'">
+          <p :class="item.todoState === 'todo' ? 'todo': 'done'" @click="todoClick(item, index)">
             <el-tag :type="item.todoState === 'todo' ? 'warning' : 'success'">{{ index + 1 }}</el-tag>
-            <span>{{ item.todoDetail }}</span>
-            <!-- <input type="text"> -->
+            <span ref="span" v-show="!item.inputShow">{{ item.todoDetail }}</span>
+            <input ref="input" type="text" @keyup.enter="todoInputBlur(item, index)" @blur="todoInputBlur(item, index)" v-show="item.inputShow && item.todoState === 'todo'">
           </p>
           <transition name="fade">
             <div class="item-btns" v-if="item.btnShow === true">
-              <el-button @click="completeTodo(item)" key="delete" class="item-delete" type="danger" size="mini" plain>完成</el-button>
+            <!-- <div class="item-btns"> -->
+              <el-button @click="completeTodo(item)" key="delete" class="item-delete" type="danger" size="mini" plain>{{ item.todoState === 'todo' ? '标为完成' : '标为未完成' }}</el-button>
               <el-button @click="$router.push(`/detail/${item._id}`)" key="detail" class="item-detail" type="primary" size="mini" plain>详情</el-button>
             </div>
           </transition>
@@ -31,7 +32,7 @@
       </li>
     </ul>
     <div class="pagination-container">
-      <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+      <el-pagination layout="prev, pager, next" :page-size="8" :total="filteredList.length"></el-pagination>
     </div>
   </div>
 </template>
@@ -60,12 +61,12 @@ export default {
       axios.get('/api/login/hasLogin')
         .then((res) => {
           sessionStorage.username = res.data.msg
-          sessionStorage.hasLogin = true
           this.$emit('setUserName', { username: res.data.msg })
           if (res.data.success) {
             if (!sessionStorage.hasLogin) {
               this.$message({ message: `Welcome ${res.data.msg}!`, type: 'success', duration: 1500 })
             }
+            sessionStorage.hasLogin = true
             this.getTodoList()
           } else {
             this.$router.replace('/login')
@@ -86,7 +87,10 @@ export default {
     getTodoList () {
       axios.get(`/api/todo/get`)
         .then(res => {
-          res.data.todoList.forEach(todo => { todo.btnShow = false })
+          res.data.todoList.forEach(todo => {
+            todo.btnShow = false
+            todo.inputShow = false
+          })
           this.todoList = res.data.todoList
         })
         .catch(err => {
@@ -95,7 +99,7 @@ export default {
         })
     },
     completeTodo (item) {
-      axios.post(`/api/todo/done/${item._id}`)
+      axios.post(`/api/todo/done/${item._id}`, item)
         .then(res => {
           if (res.data.success) {
             this.getTodoList()
@@ -106,6 +110,38 @@ export default {
         .catch(err => {
           console.log(err)
           this.$message.error({ message: '操作事项失败', duration: 1500 })
+        })
+    },
+    todoClick (item, index) {
+      if (item.todoState === 'done' || item.inputShow) return
+      const val = this.$refs.span[index].innerText
+      item.inputShow = true
+      this.$nextTick(() => {
+        this.$refs.input[index].focus()
+        this.$refs.input[index].value = val
+      })
+    },
+    todoInputBlur (item, index) {
+      const val = this.$refs.input[index].value
+      item.inputShow = false
+      this.$nextTick(() => {
+        this.$refs.span[index].innerText = val
+        item.todoDetail = val
+        this.updateTodoDetail(item)
+      })
+    },
+    updateTodoDetail (item) {
+      axios.post('/api/todo/update', item)
+        .then((res) => {
+          if (res.data.success) {
+            this.getTodoList()
+            return this.$message({ message: '更改事项内容成功', type: 'success', duration: 1500 })
+          }
+          this.$message.error({ message: '更改事项内容失败', duration: 1500 })
+        })
+        .catch((err) => {
+          console.log(err)
+          this.$message.error({ message: '更改事项内容失败', duration: 1500 })
         })
     }
   },
@@ -198,11 +234,14 @@ export default {
     .item-btns {
       position: absolute;
       top: 3px;
-      right: -120px;
+      right: -154px;
     }
     .item-detail,
     .item-delete {
       float: right;
+    }
+    .item-delete {
+      width: 90px;
     }
     .item-detail {
       margin-right: 4px;
@@ -218,6 +257,7 @@ export default {
       color: #666;
       box-sizing: border-box;
       background: transparent;
+      font-size: 14px;
     }
   }
   .pagination-container {
