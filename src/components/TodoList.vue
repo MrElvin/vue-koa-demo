@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import axios from '../util/axios'
+import axios from 'axios'
 
 export default {
   data () {
@@ -58,7 +58,7 @@ export default {
           this.$emit('setUserName', { username: res.data.msg })
           if (res.data.success) {
             if (!sessionStorage.hasLogin) {
-              this.$message({ message: `Welcome ${res.data.msg}!`, type: 'success', duration: 1500 })
+              this.$message({ message: `你好呀 ${res.data.msg}!`, type: 'success', duration: 1500 })
             }
             sessionStorage.hasLogin = true
             this.getTodoList(this.page, this.filterStatus, false)

@@ -1,7 +1,6 @@
 const router = require('koa-router')()
 const Todo = require('../models/todo')
 const mongoose = require('mongoose')
-// const url = require('url')
 
 const add = async (ctx, next) => {
   const { todoDetail, todoTime } = ctx.request.body
@@ -39,7 +38,6 @@ const get = async (ctx, next) => {
   }
 }
 const toggledone = async (ctx, next) => {
-  console.log(ctx.request.body)
   try {
     if (ctx.request.body.todoState === 'todo') {
       await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'done' } })

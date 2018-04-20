@@ -6,7 +6,6 @@
       </el-form-item>
       <el-form-item label="内容">
         <p class="detail-content">{{ detailTodo.detail }}</p>
-        <!-- <el-input class="detail-textarea" resize="none" :rows="15" type="textarea" v-model="detailTodo.detail"/> -->
       </el-form-item>
       <img src="../assets/complete.png" alt="已完成" v-if="detailTodo.status === 'done'">
       <i @click="$router.replace('/todo')"></i>
@@ -15,7 +14,7 @@
 </template>
 
 <script>
-import axios from '../util/axios'
+import axios from 'axios'
 import moment from 'moment'
 
 export default {
@@ -31,7 +30,6 @@ export default {
   created () {
     axios.get(`/api/todo/detail/${this.$route.params.todoId}`)
       .then(res => {
-        console.log(res.data)
         this.detailTodo.detail = res.data.todo.todoDetail
         this.detailTodo.time = moment(Number(res.data.todo.todoTime)).format(`YYYY 年 MM 月 DD 日 hh:mm a`)
         this.detailTodo.status = res.data.todo.todoState

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import axios from '../util/axios'
+import axios from 'axios'
 
 export default {
   data () {
