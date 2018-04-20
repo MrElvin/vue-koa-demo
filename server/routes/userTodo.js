@@ -1,6 +1,7 @@
 const router = require('koa-router')()
 const Todo = require('../models/todo')
 const mongoose = require('mongoose')
+// const url = require('url')
 
 const add = async (ctx, next) => {
   const { todoDetail, todoTime } = ctx.request.body
@@ -19,12 +20,22 @@ const add = async (ctx, next) => {
   }
 }
 const get = async (ctx, next) => {
+  const page = ctx.request.URL.searchParams.get('page')
+  const todoState = ctx.request.URL.searchParams.get('filter')
   const userId = ctx.session.userName
-  const todoDoc = await Todo.find({ userId })
-  if (todoDoc.length) {
-    ctx.body = { success: true, todoList: todoDoc }
+  let todoDoc = ''
+  let todoTotal = 0
+  if (todoState === 'all') {
+    todoDoc = await Todo.find({ userId }).sort({ 'todoTime': -1 }).limit(8).skip(8 * (page - 1))
+    todoTotal = await Todo.find({ userId })
   } else {
-    ctx.body = { success: true, todoList: [] }
+    todoDoc = await Todo.find({ userId, todoState: todoState }).sort({ 'todoTime': -1 }).limit(8).skip(8 * (page - 1))
+    todoTotal = await Todo.find({ userId, todoState: todoState })
+  }
+  if (todoDoc.length) {
+    ctx.body = { success: true, todoList: todoDoc, todoTotal: todoTotal.length }
+  } else {
+    ctx.body = { success: true, todoList: [], todoTotal: 0 }
   }
 }
 const toggledone = async (ctx, next) => {

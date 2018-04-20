@@ -2,20 +2,35 @@
 
 > A Vue.js project
 
-## Build Setup
+## Install
 
-``` bash
-# install dependencies
-npm install
+`git clone git@github.com:MrElvin/vue-koa-demo.git`
 
-# serve with hot reload at localhost:8080
-npm run dev
+### frontend
 
-# build for production with minification
-npm run build
+`cd vue-koa-demo && npm install`
 
-# build for production and view the bundle analyzer report
-npm run build --report
-```
+### backend
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+`cd vue-koa-demo/server && npm install`
+
+### mongodb
+
+first modify the vue-koa-demo/server/mongod.conf
+change `systemLog.path` to `/path/to/vue-koa-demo/server/mongodb/mongo.log`
+change `storage` to `/path/to/vue-koa-demo/server/mongodb`
+
+## Run
+
+### frontend
+
+`npm run dev`   open browser: `localhost:8080`
+
+### backend
+
+`cd ./server && node ./bin/www`
+if you have already installed **pm2** , you can also run backend by executing `pm2 start pm2.json`.
+
+### mongodb
+
+`cd ./server && mongod -f mongod.conf`

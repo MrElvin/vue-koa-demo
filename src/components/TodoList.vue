@@ -7,14 +7,14 @@
       @keyup.ctrl.enter.native="submitTodo">
     </el-input>
     <div class="state-btns">
-      <el-radio-group v-model="filterStatus" size="small" text-color="#FFF" fill="#66D4EB">
+      <el-radio-group @change="getTodoList(undefined, undefined, true)" v-model="filterStatus" size="small" text-color="#FFF" fill="#66D4EB">
         <el-radio-button label="all">全部</el-radio-button>
         <el-radio-button label="todo">待完成</el-radio-button>
         <el-radio-button label="done">已完成</el-radio-button>
       </el-radio-group>
     </div>
     <ul>
-      <li v-for="(item, index) in filteredList" :key="index">
+      <li v-for="(item, index) in todoList" :key="index">
         <div @mouseover="item.btnShow = true" @mouseout="item.btnShow = false" class="item-container">
           <p :class="item.todoState === 'todo' ? 'todo': 'done'" @click="todoClick(item, index)">
             <el-tag :type="item.todoState === 'todo' ? 'warning' : 'success'">{{ index + 1 }}</el-tag>
@@ -23,7 +23,6 @@
           </p>
           <transition name="fade">
             <div class="item-btns" v-if="item.btnShow === true">
-            <!-- <div class="item-btns"> -->
               <el-button @click="completeTodo(item)" key="delete" class="item-delete" type="danger" size="mini" plain>{{ item.todoState === 'todo' ? '标为完成' : '标为未完成' }}</el-button>
               <el-button @click="$router.push(`/detail/${item._id}`)" key="detail" class="item-detail" type="primary" size="mini" plain>详情</el-button>
             </div>
@@ -31,8 +30,9 @@
         </div>
       </li>
     </ul>
+    <p class="encourage" v-if="todoTotal === 0">空的日程列表</p>
     <div class="pagination-container">
-      <el-pagination layout="prev, pager, next" :page-size="8" :total="filteredList.length"></el-pagination>
+      <el-pagination v-if="todoTotal !== 0" :current-page.sync="page" @current-change="getTodoList" layout="prev, pager, next" :page-size="8" :total="todoTotal"></el-pagination>
     </div>
   </div>
 </template>
@@ -45,15 +45,9 @@ export default {
     return {
       todoToAdd: '',
       todoList: [],
-      filterStatus: 'all'
-    }
-  },
-  computed: {
-    filteredList () {
-      if (this.filterStatus === 'all') return this.todoList
-      return this.todoList.filter((todo) => {
-        return todo.todoState === this.filterStatus
-      })
+      filterStatus: sessionStorage.getItem('filter') ? sessionStorage.getItem('filter') : 'all',
+      todoTotal: 0,
+      page: sessionStorage.getItem('pagination') ? Number(sessionStorage.getItem('pagination')) : 1
     }
   },
   methods: {
@@ -67,12 +61,15 @@ export default {
               this.$message({ message: `Welcome ${res.data.msg}!`, type: 'success', duration: 1500 })
             }
             sessionStorage.hasLogin = true
-            this.getTodoList()
+            this.getTodoList(this.page, this.filterStatus, false)
           } else {
             this.$router.replace('/login')
           }
         })
-        .catch((err) => { console.log(err) })
+        .catch((err) => {
+          console.log(err)
+          this.$router.replace('/login')
+        })
     },
     submitTodo () {
       axios.post(`/api/todo/add`, { todoDetail: this.todoToAdd, todoTime: Date.now() })
@@ -80,18 +77,22 @@ export default {
           if (res.data.success) this.$message({ message: res.data.msg, type: 'success', duration: 1500 })
           else this.$message.error({ message: res.data.msg, duration: 1500 })
           this.todoToAdd = ''
-          this.getTodoList()
+          this.page = 1
+          this.getTodoList(this.page, this.filterStatus, false)
         })
         .catch(err => { console.log(err) })
     },
-    getTodoList () {
-      axios.get(`/api/todo/get`)
+    getTodoList (page = 1, filter = this.filterStatus, backToFirst) {
+      this.page = page
+      axios.get(`/api/todo/get?page=${this.page}&filter=${filter}`)
         .then(res => {
           res.data.todoList.forEach(todo => {
             todo.btnShow = false
             todo.inputShow = false
           })
           this.todoList = res.data.todoList
+          this.todoTotal = res.data.todoTotal
+          if (backToFirst) this.page = 1
         })
         .catch(err => {
           console.log(err)
@@ -102,7 +103,7 @@ export default {
       axios.post(`/api/todo/done/${item._id}`, item)
         .then(res => {
           if (res.data.success) {
-            this.getTodoList()
+            this.getTodoList(this.page, this.filterStatus, false)
             return this.$message({ message: '操作事项成功', type: 'success', duration: 1500 })
           }
           this.$message.error({ message: '操作事项失败', duration: 1500 })
@@ -134,7 +135,7 @@ export default {
       axios.post('/api/todo/update', item)
         .then((res) => {
           if (res.data.success) {
-            this.getTodoList()
+            this.getTodoList(this.page, this.filterStatus, false)
             return this.$message({ message: '更改事项内容成功', type: 'success', duration: 1500 })
           }
           this.$message.error({ message: '更改事项内容失败', duration: 1500 })
@@ -147,6 +148,10 @@ export default {
   },
   mounted () {
     this.checkHasLogin()
+  },
+  beforeDestroy () {
+    sessionStorage.setItem('pagination', this.page)
+    sessionStorage.setItem('filter', this.filterStatus)
   }
 }
 </script>
@@ -259,6 +264,10 @@ export default {
       background: transparent;
       font-size: 14px;
     }
+  }
+  .encourage {
+    color: #65D4EB;
+    margin-top: 160px;
   }
   .pagination-container {
     margin-top: 24px;
