@@ -2,6 +2,7 @@ const User = require('../models/user')
 
 const register = async (ctx, next) => {
   const { name, pwd } = ctx.request.body
+  console.log(name)
   const isExist = await User.findOne({ userId: name })
   if (isExist) {
     ctx.body = { success: false }

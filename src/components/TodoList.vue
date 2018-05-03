@@ -72,6 +72,7 @@ export default {
         })
     },
     submitTodo () {
+      if (this.todoToAdd.trim() === '') return
       axios.post(`/api/todo/add`, { todoDetail: this.todoToAdd, todoTime: Date.now() })
         .then(res => {
           if (res.data.success) this.$message({ message: res.data.msg, type: 'success', duration: 1500 })
