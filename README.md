@@ -2,6 +2,10 @@
 
 > A Vue.js project
 
+## Preview online
+
+[vue-koa-demo](http://39.105.89.85:3000/)
+
 ## Install
 
 `git clone git@github.com:MrElvin/vue-koa-demo.git`
@@ -16,11 +20,11 @@
 
 ### mongodb
 
-first modify the vue-koa-demo/server/mongod.conf
+first modify the vue-koa-demo/server/mongod.prod.conf
 
-change `systemLog.path` to `/path/to/vue-koa-demo/server/mongodb/mongo.log`
+change `systemLog.path` to `/path/to/mongodb.log`
 
-change `storage` to `/path/to/vue-koa-demo/server/mongodb`
+change `storage` to `/path/to/mongodb/data`
 
 ## Run
 
@@ -36,4 +40,4 @@ if you have already installed **pm2** , you can also run backend by executing `p
 
 ### mongodb
 
-`cd ./server && mongod -f mongod.conf`
+`cd ./server && mongod -f /path/to/your/mongod.conf`
