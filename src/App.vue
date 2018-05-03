@@ -8,7 +8,7 @@
 
 <script>
 import TodoHeader from '@/components/Todoheader'
-import TodoFooter from '@/components/TodoFooter'
+import TodoFooter from '@/components/Todofooter'
 
 export default {
   name: 'App',
