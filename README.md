@@ -40,4 +40,4 @@ if you have already installed **pm2** , you can also run backend by executing `p
 
 ### mongodb
 
-`cd ./server && mongod -f /path/to/your/mongod.conf`
+`mongod -f /path/to/your/mongod.conf`
