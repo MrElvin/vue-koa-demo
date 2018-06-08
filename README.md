@@ -4,7 +4,7 @@
 
 ## Preview online
 
-[vue-koa-demo](http://39.105.89.85:3000/)
+[vue-koa-demo](http://todo.breezymelon.com/)
 
 ## Install
 
