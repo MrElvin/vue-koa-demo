@@ -1,43 +1,52 @@
 # vue-koa-demo
 
-> A Vue.js project
+> 一个第一次接触全栈的**小**白搞得一个已经线上部署了的**小**demo
 
-## Preview online
+## 项目说明
+
+- UI：Element
+- 前端框架：Vue
+- 后端框架：Koa
+- 数据库：Mongodb
+- 部署：PM2
+
+## 项目相关博客
+
+[阿里云 CentOS 环境下 Node 环境搭建](http://www.breezymelon.com/2018/05/16/%E9%98%BF%E9%87%8C%E4%BA%91%20CentOS%20%E7%8E%AF%E5%A2%83%E4%B8%8B%20Node%20%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/)
+
+## 在线预览
 
 [vue-koa-demo](http://todo.breezymelon.com/)
 
-## Install
+## 安装
 
 `git clone git@github.com:MrElvin/vue-koa-demo.git`
 
-### frontend
+### 前端
 
 `cd vue-koa-demo && npm install`
 
-### backend
+### 后端
 
 `cd vue-koa-demo/server && npm install`
 
-### mongodb
+### mongodb 数据库
 
-first modify the vue-koa-demo/server/mongod.prod.conf
+为了在本地把项目跑起来，需要：
+1. 在 mongodb 数据库中建立一个名为 **vue_koa_todos** 的数据库
+2. 修改 `server/routes/index.js` 中的链接命令，对**第九行**取消注释并把端口号设置定为本地 mongod.conf 文件中配置的端口号，注释掉**第十行**
 
-change `systemLog.path` to `/path/to/mongodb.log`
 
-change `storage` to `/path/to/mongodb/data`
+## 运行
 
-## Run
+### 前端
 
-### frontend
+在项目根路径下执行 `npm run dev` 打开浏览器 `localhost:8080`
 
-`npm run dev`   open browser: `localhost:8080`
+### 后端
 
-### backend
+在项目根路径下执行 `cd ./server && node ./bin/www`
 
-`cd ./server && node ./bin/www`
-
-if you have already installed **pm2** , you can also run backend by executing `pm2 start pm2.json`.
-
-### mongodb
+### mongodb 数据库
 
 `mongod -f /path/to/your/mongod.conf`
