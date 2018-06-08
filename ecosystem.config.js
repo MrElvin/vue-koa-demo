@@ -30,7 +30,7 @@ module.exports = {
       ref  : 'origin/master',
       repo : 'git@github.com:MrElvin/vue-koa-demo.git',
       path : '/home/breezymelon/vue-koa-demo',
-      'post-deploy' : './run.sh && pm2 reload ecosystem.config.js --env production'
+      'post-deploy' : 'git pull && ./run.sh && pm2 reload ecosystem.config.js --env production'
     },
     dev : {
       user : 'breezymelon',
