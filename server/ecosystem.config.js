@@ -29,7 +29,7 @@ module.exports = {
       host : '47.95.111.133',
       ref  : 'origin/master',
       repo : 'git@github.com:MrElvin/vue-koa-demo.git',
-      path : '~/projects/production',
+      path : '/home/breezymelon/vue-koa-demo',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env production'
     },
     dev : {
@@ -37,7 +37,7 @@ module.exports = {
       host : '47.95.111.133',
       ref  : 'origin/master',
       repo : 'git@github.com:MrElvin/vue-koa-demo.git',
-      path : '~/projects/development',
+      path : '/var/www/development',
       'post-deploy' : 'npm install && pm2 reload ecosystem.config.js --env dev',
       env  : {
         NODE_ENV: 'dev'
