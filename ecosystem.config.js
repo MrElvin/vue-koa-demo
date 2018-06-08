@@ -9,7 +9,7 @@ module.exports = {
     // First application
     {
       name      : 'vue-koa-todos',
-      script    : 'app.js',
+      script    : './server/bin/www',
       env: {
         COMMON_VARIABLE: 'true'
       },
