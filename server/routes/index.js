@@ -6,7 +6,8 @@ const userTodo = require('./userTodo')
 
 const mongoose = require('mongoose')
 
-mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos')
+// mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos')
+mongoose.connect('mongodb://vue_koa_todos_owner:@liyunVueKoaTodos@127.0.0.1:27017/vue_koa_todos')
 mongoose.connection.on('connected', () => { console.log('MongoDB connected success') })
 mongoose.connection.on('error', () => { console.log('MongoDB connected fail') })
 mongoose.connection.on('disconnected', () => { console.log('MongoDB connected disconnected') })
