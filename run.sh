@@ -1,1 +1,1 @@
-rm -rf ./server/public && mkdir ./server/public && mv ./dist/index.html ./server/public/index.html && mv ./dist/static/ ./server/public/static/ && rm -rf ./dist
+npm install --registry=https://registry.npm.taobao.org && npm run build && cd ./server && npm install --registry=https://registry.npm.taobao.org && cd .. && rm -rf ./server/public && mkdir ./server/public && mv ./dist/index.html ./server/public/index.html && mv ./dist/static/ ./server/public/static/ && rm -rf ./dist
