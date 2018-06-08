@@ -2,7 +2,7 @@
   "name": "vue-koa-demo",
   "version": "1.0.0",
   "description": "A Vue.js project",
-  "author": "MrElvin1 <935448078@qq.com>",
+  "author": "BreezyMelon <935448078@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -10,6 +10,7 @@
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
+  "git": "git@github.com:MrElvin/vue-koa-demo.git",
   "dependencies": {
     "axios": "^0.18.0",
     "element-ui": "^2.3.2",
