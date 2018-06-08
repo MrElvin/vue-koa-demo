@@ -1,6 +1,6 @@
 <template>
   <div class="todo-footer">
-    <footer>vue-koa-todos by <span>MrElvin</span></footer>
+    <footer>vue-koa-todos by <span>BreezyMelon</span></footer>
   </div>
 </template>
 
