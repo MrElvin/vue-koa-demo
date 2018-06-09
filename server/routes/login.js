@@ -1,8 +1,10 @@
 const router = require('koa-router')()
 const User = require('../models/user')
+const bcrypt = require('bcryptjs')
 
 const checkLoginName = async (ctx, next) => {
   const { name } = ctx.request.body
+  console.log(name)
   const userDoc = await User.findOne({ userId: name })
   if (userDoc) {
     ctx.body = { success: true }
@@ -15,7 +17,7 @@ const login = async (ctx, next) => {
   const { name, pwd } = ctx.request.body
   const userDoc = await User.findOne({ userId: name })
   if (userDoc) {
-    if (userDoc.userPwd === pwd) {
+    if (bcrypt.compareSync(pwd, userDoc.userPwd)) {
       ctx.session.userName = userDoc.userId
       ctx.body = { success: true, msg: '', userName: ctx.session.userName }
     } else {

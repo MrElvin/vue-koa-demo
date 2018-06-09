@@ -1,6 +1,6 @@
 <template>
   <div class="todo-header">
-    <img @click="logout" v-if="username !== ''" @mouseover="logoutPic = '/static/images/logout-active.png'" @mouseout="logoutPic = '/static/images/logout.png'" :src="logoutPic" alt="登出">
+    <div @click="logout" v-if="username !== ''"></div>
     <h1>{{ username }}{{ username === '' ? '' : '\'s ' }}todos</h1>
   </div>
 </template>
@@ -46,12 +46,19 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   flex: 0 0 auto;
   position: relative;
-  img {
+  div {
     width: 20px;
+    height: 20px;
     position: absolute;
     right: 32px;
     top: 32px;
     cursor: pointer;
+    background: url('~@/assets/logout.png') no-repeat no-repeat center center;
+    background-size: 20px 20px;
+
+    &:hover {
+      background-image: url('~@/assets/logout-active.png');
+    }
   }
   h1 {
     height: 140px;
