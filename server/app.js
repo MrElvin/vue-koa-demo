@@ -35,7 +35,6 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-app.use(require('koa-static')(path.join(__dirname, '/public')))
 
 app.use(views(path.resolve(__dirname, '/views'), {
   extension: 'html'
@@ -52,6 +51,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(historyApiFallback())
+app.use(require('koa-static')(path.join(__dirname, '/public')))
 
 // error-handling
 app.on('error', (err, ctx) => {
