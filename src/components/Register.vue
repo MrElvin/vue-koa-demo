@@ -67,6 +67,7 @@ export default {
         if (valid) {
           axios.post('/api/register', this.form)
             .then((res) => {
+              console.log(res)
               if (res.data.success) {
                 this.$message({
                   message: '注册成功，快去登录吧 😉',
