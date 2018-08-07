@@ -6,6 +6,7 @@ const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const session = require('koa-session')
+const historyApiFallback = require('koa2-history-api-fallback')
 
 const path = require('path')
 
@@ -50,6 +51,7 @@ app.use(async (ctx, next) => {
 
 // routes
 app.use(index.routes(), index.allowedMethods())
+app.use(historyApiFallback())
 
 // error-handling
 app.on('error', (err, ctx) => {
