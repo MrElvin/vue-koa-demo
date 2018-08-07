@@ -1,9 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Login from '@/components/Login'
-import Register from '@/components/Register'
-import TodoList from '@/components/TodoList'
-import Detail from '@/components/Detail'
 
 Vue.use(Router)
 
@@ -13,27 +9,32 @@ export default new Router({
     {
       path: '/',
       name: 'todo',
-      component: TodoList
+      component: resolve => require(['@/components/TodoList'], resolve)
     },
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: resolve => require(['@/components/Login'], resolve)
     },
     {
       path: '/register',
       name: 'register',
-      component: Register
+      component: resolve => require(['@/components/Register'], resolve)
     },
     {
       path: '/todo',
       name: 'todoList',
-      component: TodoList
+      component: resolve => require(['@/components/TodoList'], resolve)
     },
     {
       path: '/detail/:todoId',
       name: 'detail',
-      component: Detail
+      component: resolve => require(['@/components/Detail'], resolve)
+    },
+    {
+      path: '*',
+      name: 'notFound',
+      component: resolve => require(['@/components/NotFound'], resolve)
     }
   ]
 })
