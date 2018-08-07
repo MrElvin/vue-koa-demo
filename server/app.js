@@ -1,6 +1,5 @@
 const Koa = require('koa')
 const app = new Koa()
-const views = require('koa-views')
 const json = require('koa-json')
 const onerror = require('koa-onerror')
 const bodyparser = require('koa-bodyparser')
@@ -35,10 +34,6 @@ app.use(bodyparser({
 }))
 app.use(json())
 app.use(logger())
-
-app.use(views(path.resolve(__dirname, '/views'), {
-  extension: 'html'
-}))
 
 // logger
 app.use(async (ctx, next) => {
