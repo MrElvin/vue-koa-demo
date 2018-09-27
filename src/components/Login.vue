@@ -75,7 +75,7 @@ export default {
       this.$refs[formName].resetFields()
     }
   },
-  created () {
+  mounted () {
     if (sessionStorage.username) {
       this.$router.replace('/todo')
     }

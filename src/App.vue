@@ -14,7 +14,7 @@ export default {
   name: 'App',
   data () {
     return {
-      username: sessionStorage.username || ''
+      username: ''
     }
   },
   methods: {
@@ -22,7 +22,8 @@ export default {
       this.username = payload.username
     }
   },
-  created () {
+  mounted () {
+    this.username = sessionStorage.username || ''
     if (sessionStorage.username) {
       this.$router.replace('/todo')
     }

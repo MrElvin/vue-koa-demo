@@ -45,9 +45,9 @@ export default {
     return {
       todoToAdd: '',
       todoList: [],
-      filterStatus: sessionStorage.getItem('filter') ? sessionStorage.getItem('filter') : 'all',
+      filterStatus: '',
       todoTotal: 0,
-      page: sessionStorage.getItem('pagination') ? Number(sessionStorage.getItem('pagination')) : 1
+      page: 1
     }
   },
   methods: {
@@ -148,6 +148,8 @@ export default {
     }
   },
   mounted () {
+    this.filterStatus = sessionStorage.getItem('filter') ? sessionStorage.getItem('filter') : 'all'
+    this.page = sessionStorage.getItem('pagination') ? Number(sessionStorage.getItem('pagination')) : 1
     this.checkHasLogin()
   },
   beforeDestroy () {

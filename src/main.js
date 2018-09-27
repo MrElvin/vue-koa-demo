@@ -1,12 +1,7 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
-import './mock'
+import { createRouter } from './router'
 import { Form, FormItem, Button, Input, RadioGroup, RadioButton, Tag, Pagination, Message } from 'element-ui'
-
-// Vue.config.productionTip = false
 
 Vue.use(Form)
 Vue.use(FormItem)
@@ -18,9 +13,11 @@ Vue.use(Tag)
 Vue.use(Pagination)
 Vue.prototype.$message = Message
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  render: h => h(App)
-})
+export function createApp () {
+  const router = createRouter()
+  const app = new Vue({
+    router,
+    render: h => h(App)
+  })
+  return { app, router }
+}
