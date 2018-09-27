@@ -7,6 +7,7 @@ const bodyparser = require('koa-bodyparser')
 const onerror = require('koa-onerror')
 const logger = require('koa-logger')
 const KoaRouter = require('koa-router')
+const session = require('koa-session')
 
 const { createBundleRenderer } = require('vue-server-renderer')
 const devServerSetup = require('../build/setup-dev-server')
@@ -17,6 +18,18 @@ const resolve = file => path.resolve(__dirname, file)
 const app = new Koa()
 const router = new KoaRouter()
 const index = require('./routes/index')
+
+app.keys = ['vue koa todo demo']
+
+const CONFIG = {
+  key: 'koa:todo',
+  maxAge: 86400000,
+  overwrite: true,
+  httpOnly: true,
+  signed: true,
+  rolling: false,
+  renew: false
+}
 
 let renderer
 let readyPromise
@@ -74,17 +87,15 @@ const prodMiddleware = async (ctx, next) => {
   console.log('CONT', context)
   try {
     const html = await render(context)
-    console.log('HTML', html)
     ctx.body = html
   } catch (err) {
-    console.log('ERR', err)
     await next()
   }
 }
 
 // error handler
 onerror(app)
-
+app.use(session(CONFIG, app))
 // middlewares
 app.use(bodyparser({
   enableTypes: ['json', 'form', 'text']
@@ -105,7 +116,8 @@ router.get('*', isProd ? prodMiddleware : devMiddleware)
 
 app.use(index.routes(), index.allowedMethods())
 app.use(router.routes(), router.allowedMethods())
-app.use(require('koa-static')(resolve(__dirname, 'dist')))
+console.log(resolve('../dist'))
+app.use(require('koa-static')(resolve('../dist')))
 
 // error-handling
 app.on('error', (err, ctx) => {

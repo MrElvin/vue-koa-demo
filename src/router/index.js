@@ -31,11 +31,6 @@ export function createRouter () {
         path: '/detail/:todoId',
         name: 'detail',
         component: resolve => require(['@/components/Detail'], resolve)
-      },
-      {
-        path: '*',
-        name: 'notFound',
-        component: resolve => require(['@/components/NotFound'], resolve)
       }
     ]
   })
