@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const merge = require('webpack-merge')
 const baseConfig = require('./webpack.base.conf')
+const CopyWebpackPlugin = require('copy-webpack-plugin')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -24,7 +25,14 @@ const plugins = isProd ? [
   new ExtractTextPlugin({
     filename: utils.assetsPath('css/[name].[contenthash].css'),
     allChunks: true
-  })
+  }),
+  new CopyWebpackPlugin([
+    {
+      from: path.resolve(__dirname, '../static'),
+      to: config.build.assetsSubDirectory,
+      ignore: ['.*']
+    }
+  ])
 ] : [
   new webpack.HotModuleReplacementPlugin()
 ]
