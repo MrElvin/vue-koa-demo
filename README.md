@@ -21,6 +21,8 @@
 
 - [一次前后端分离项目部署实践](https://www.breezymelon.com/2018/06/14/%E4%B8%80%E6%AC%A1%E5%89%8D%E5%90%8E%E7%AB%AF%E5%88%86%E7%A6%BB%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2%E5%AE%9E%E8%B7%B5/)
 
+- [Vue SSR 初探](https://www.breezymelon.com/2018/09/28/Vue-ssr-%E5%88%9D%E6%8E%A2/)
+
 ## 在线预览
 
 [vue-koa-demo](http://todo.breezymelon.com/)
