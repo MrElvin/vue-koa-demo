@@ -11,12 +11,8 @@ const add = async (ctx, next) => {
     todoDetail,
     todoState: 'todo'
   })
-  const result = await todoDoc.save()
-  if (result) {
-    ctx.body = { success: true, msg: '添加日程成功' }
-  } else {
-    ctx.body = { success: false, msg: '添加日程失败' }
-  }
+  await todoDoc.save()
+  ctx.body = { success: true, msg: '添加日程成功' }
 }
 const get = async (ctx, next) => {
   const page = ctx.request.URL.searchParams.get('page')
@@ -38,38 +34,23 @@ const get = async (ctx, next) => {
   }
 }
 const toggledone = async (ctx, next) => {
-  try {
-    if (ctx.request.body.todoState === 'todo') {
-      await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'done' } })
-    } else {
-      await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'todo' } })
-    }
-    const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
-    ctx.body = { success: true, todoList: todoDoc }
-  } catch (err) {
-    console.log(err)
-    ctx.body = { success: false, todoList: [] }
+  if (ctx.request.body.todoState === 'todo') {
+    await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'done' } })
+  } else {
+    await Todo.update({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) }, { $set: { 'todoState': 'todo' } })
   }
+  const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
+  ctx.body = { success: true, todoList: todoDoc }
 }
 const detail = async (ctx, next) => {
-  try {
-    const todoDoc = await Todo.findOne({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) })
-    ctx.body = { success: true, todo: todoDoc }
-  } catch (err) {
-    console.log(err)
-    ctx.body = { success: false, todo: null }
-  }
+  const todoDoc = await Todo.findOne({ '_id': mongoose.Types.ObjectId(ctx.params['todoId']) })
+  ctx.body = { success: true, todo: todoDoc }
 }
 const updateDetail = async (ctx, next) => {
   const { _id, todoDetail } = ctx.request.body
-  try {
-    await Todo.update({ '_id': mongoose.Types.ObjectId(_id) }, { $set: { 'todoDetail': todoDetail } })
-    const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
-    ctx.body = { success: true, todoList: todoDoc }
-  } catch (err) {
-    console.log(err)
-    ctx.body = { success: false, todoList: [] }
-  }
+  await Todo.update({ '_id': mongoose.Types.ObjectId(_id) }, { $set: { 'todoDetail': todoDetail } })
+  const todoDoc = await Todo.find({ 'userId': ctx.session.userName })
+  ctx.body = { success: true, todoList: todoDoc }
 }
 
 router.post('/add', add)

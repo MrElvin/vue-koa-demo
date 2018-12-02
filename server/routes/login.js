@@ -4,7 +4,6 @@ const bcrypt = require('bcryptjs')
 
 const checkLoginName = async (ctx, next) => {
   const { name } = ctx.request.body
-  console.log(name)
   const userDoc = await User.findOne({ userId: name })
   if (userDoc) {
     ctx.body = { success: true }

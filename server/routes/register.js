@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 
 const register = async (ctx, next) => {
   const { name, pwd } = ctx.request.body
+  if (!name) throw new Error('name is required')
   const isExist = await User.findOne({ userId: name })
   if (isExist) {
     ctx.body = { success: false }
@@ -11,8 +12,8 @@ const register = async (ctx, next) => {
       userId: name,
       userPwd: bcrypt.hashSync(pwd)
     })
-    const result = await userDoc.save()
-    if (result) ctx.body = { success: true }
+    await userDoc.save()
+    ctx.body = { success: true }
   }
 }
 

@@ -6,11 +6,19 @@ const userTodo = require('./userTodo')
 
 const mongoose = require('mongoose')
 
-// mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos')
-mongoose.connect('mongodb://vue_koa_todos_owner:aliyunVueKoaTodos@127.0.0.1:27017/vue_koa_todos')
+switch (process.env.NODE_ENV) {
+  case 'test':
+    mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos_test')
+    break
+  /* istanbul ignore next */
+  case 'dev':
+    mongoose.connect('mongodb://127.0.0.1:27017/vue_koa_todos')
+    break
+  /* istanbul ignore next */
+  default:
+    mongoose.connect('mongodb://vue_koa_todos_owner:aliyunVueKoaTodos@127.0.0.1:27017/vue_koa_todos')
+}
 mongoose.connection.on('connected', () => { console.log('MongoDB connected success') })
-mongoose.connection.on('error', () => { console.log('MongoDB connected fail') })
-mongoose.connection.on('disconnected', () => { console.log('MongoDB connected disconnected') })
 
 router.post('/api/register', register)
 router.use('/api/login', login.routes(), login.allowedMethods())
