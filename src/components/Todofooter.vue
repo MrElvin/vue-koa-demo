@@ -6,7 +6,10 @@
 
 <script>
 export default {
-  name: 'todo'
+  name: 'todo',
+  data () {
+    return {}
+  }
 }
 </script>
 

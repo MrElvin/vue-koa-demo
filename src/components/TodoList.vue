@@ -52,7 +52,7 @@ export default {
   },
   methods: {
     checkHasLogin () {
-      axios.get('/api/login/hasLogin')
+      return axios.get('/api/login/hasLogin')
         .then((res) => {
           sessionStorage.username = res.data.msg
           this.$emit('setUserName', { username: res.data.msg })
@@ -67,25 +67,24 @@ export default {
           }
         })
         .catch((err) => {
-          console.log(err)
           this.$router.replace('/login')
         })
     },
     submitTodo () {
       if (this.todoToAdd.trim() === '') return
-      axios.post(`/api/todo/add`, { todoDetail: this.todoToAdd, todoTime: Date.now() })
+      return axios.post(`/api/todo/add`, { todoDetail: this.todoToAdd, todoTime: Date.now() })
         .then(res => {
           if (res.data.success) this.$message({ message: res.data.msg, type: 'success', duration: 1500 })
           else this.$message.error({ message: res.data.msg, duration: 1500 })
           this.todoToAdd = ''
           this.page = 1
-          this.getTodoList(this.page, this.filterStatus, false)
+          return this.getTodoList(this.page, this.filterStatus, false)
         })
         .catch(err => { console.log(err) })
     },
     getTodoList (page = 1, filter = this.filterStatus, backToFirst) {
       this.page = page
-      axios.get(`/api/todo/get?page=${this.page}&filter=${filter}`)
+      return axios.get(`/api/todo/get?page=${this.page}&filter=${filter}`)
         .then(res => {
           res.data.todoList.forEach(todo => {
             todo.btnShow = false
@@ -96,12 +95,11 @@ export default {
           if (backToFirst) this.page = 1
         })
         .catch(err => {
-          console.log(err)
           this.$message.error({ message: '获取事项列表失败', duration: 1500 })
         })
     },
     completeTodo (item) {
-      axios.post(`/api/todo/done/${item._id}`, item)
+      return axios.post(`/api/todo/done/${item._id}`, item)
         .then(res => {
           if (res.data.success) {
             this.getTodoList(this.page, this.filterStatus, false)
@@ -110,7 +108,6 @@ export default {
           this.$message.error({ message: '操作事项失败', duration: 1500 })
         })
         .catch(err => {
-          console.log(err)
           this.$message.error({ message: '操作事项失败', duration: 1500 })
         })
     },
@@ -133,7 +130,7 @@ export default {
       })
     },
     updateTodoDetail (item) {
-      axios.post('/api/todo/update', item)
+      return axios.post('/api/todo/update', item)
         .then((res) => {
           if (res.data.success) {
             this.getTodoList(this.page, this.filterStatus, false)

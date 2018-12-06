@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for vue-koa-demo/server/app.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">vue-koa-demo/server</a> app.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/28</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/0</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/2</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/28</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Koa = <span class="cstat-no" title="statement not covered" >require('koa')</span>
+const app = <span class="cstat-no" title="statement not covered" >new Koa()</span>
+const json = <span class="cstat-no" title="statement not covered" >require('koa-json')</span>
+const onerror = <span class="cstat-no" title="statement not covered" >require('koa-onerror')</span>
+const bodyparser = <span class="cstat-no" title="statement not covered" >require('koa-bodyparser')</span>
+const logger = <span class="cstat-no" title="statement not covered" >require('koa-logger')</span>
+const session = <span class="cstat-no" title="statement not covered" >require('koa-session')</span>
+const historyApiFallback = <span class="cstat-no" title="statement not covered" >require('koa2-history-api-fallback')</span>
+&nbsp;
+const path = <span class="cstat-no" title="statement not covered" >require('path')</span>
+&nbsp;
+const index = <span class="cstat-no" title="statement not covered" >require('./routes/index')</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >app.keys = ['vue koa todo demo']</span>
+&nbsp;
+const CONFIG = <span class="cstat-no" title="statement not covered" >{</span>
+  key: 'koa:todo',
+  maxAge: 86400000,
+  overwrite: true,
+  httpOnly: true,
+  signed: true,
+  rolling: false,
+  renew: false
+}
+&nbsp;
+// error handler
+<span class="cstat-no" title="statement not covered" >onerror(app)</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >app.use(session(CONFIG, app))</span>
+&nbsp;
+// middlewares
+<span class="cstat-no" title="statement not covered" >app.use(bodyparser({</span>
+  enableTypes: ['json', 'form', 'text']
+}))
+<span class="cstat-no" title="statement not covered" >app.use(json())</span>
+<span class="cstat-no" title="statement not covered" >app.use(logger())</span>
+&nbsp;
+// logger
+<span class="cstat-no" title="statement not covered" >app.use(<span class="fstat-no" title="function not covered" >as</span>ync (ctx, next) =&gt; {</span>
+  const start = <span class="cstat-no" title="statement not covered" >new Date()</span>
+<span class="cstat-no" title="statement not covered" >  await next()</span>
+  const ms = <span class="cstat-no" title="statement not covered" >new Date() - start</span>
+<span class="cstat-no" title="statement not covered" >  console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)</span>
+})
+&nbsp;
+// routes
+<span class="cstat-no" title="statement not covered" >app.use(index.routes(), index.allowedMethods())</span>
+<span class="cstat-no" title="statement not covered" >app.use(historyApiFallback())</span>
+<span class="cstat-no" title="statement not covered" >app.use(require('koa-static')(path.join(__dirname, '/public')))</span>
+&nbsp;
+// error-handling
+<span class="cstat-no" title="statement not covered" >app.on('error', <span class="fstat-no" title="function not covered" >(e</span>rr, ctx) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >  console.error('server error', err, ctx)</span>
+})
+&nbsp;
+<span class="cstat-no" title="statement not covered" >module.exports = app</span>
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 04 2018 14:25:28 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

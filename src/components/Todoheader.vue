@@ -20,7 +20,7 @@ export default {
   },
   methods: {
     logout () {
-      axios.get('/api/logout')
+      return axios.get('/api/logout')
         .then((res) => {
           if (res.data.success) {
             this.$emit('setUserName', { username: '' })
@@ -32,7 +32,6 @@ export default {
         })
         .catch((err) => {
           this.$message.error({ message: '注销失败', duration: 1500 })
-          console.log(err)
         })
     }
   }

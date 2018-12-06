@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for vue-koa-demo/dist/static/js/2.07a9340b30b025ce9881.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">vue-koa-demo/dist/static/js</a> 2.07a9340b30b025ce9881.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/1</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >webpackJsonp([2],{dIqY:<span class="fstat-no" title="function not covered" >fu</span>nction(e,r,t){"use strict";<span class="cstat-no" title="statement not covered" >Object.defineProperty(r,"__esModule",{value:!0});v</span>ar s=<span class="cstat-no" title="statement not covered" >t("OMN4"),</span>o=<span class="cstat-no" title="statement not covered" >t.n(s),</span>n=<span class="cstat-no" title="statement not covered" >{data:<span class="fstat-no" title="function not covered" >fu</span>nction(){var e=<span class="cstat-no" title="statement not covered" >this;<span class="cstat-no" title="statement not covered" ></span>return{form:{name:"",pwd:"",repwd:""},registerRules:{name:[{required:!0,message:"用户名不能为空",trigger:"blur"},{min:3,max:15,message:"长度在 3 到 15 个字符之间",trigger:"blur"}],pwd:[{required:!0,message:"密码不能为空",trigger:"blur"},{validator:<span class="fstat-no" title="function not covered" >fu</span>nction(e,r,t){<span class="cstat-no" title="statement not covered" >""===r?t(new Error("密码不能为空")):t()}</span>,trigger:"blur"}],repwd:[{required:!0,message:"再次输入密码",trigger:"blur"},{validator:<span class="fstat-no" title="function not covered" >fu</span>nction(r,t,s){<span class="cstat-no" title="statement not covered" >""===t?s(new Error("再次输入密码")):t!==e.form.pwd?s(new Error("两次输入密码不一致")):s()}</span>,trigger:"blur"}]}}}</span>,methods:{confirmRegister:<span class="fstat-no" title="function not covered" >fu</span>nction(e){var r=<span class="cstat-no" title="statement not covered" >this;<span class="cstat-no" title="statement not covered" ></span>this.$refs[e].validate(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >if(!e)<span class="cstat-no" title="statement not covered" >return r.$message.error({message:"注册失败 😥",duration:1500}),!1;<span class="cstat-no" title="statement not covered" >o</span></span>.a.post("/api/register",r.form).then(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >console.log(e),e.data.success?(r.$message({message:"注册成功，快去登录吧 😉",type:"success",duration:1500}),setTimeout(<span class="fstat-no" title="function not covered" >fu</span>nction(){<span class="cstat-no" title="statement not covered" >r.$router.push("/login")}</span>,1e3)):(r.$message.error({message:"用户名已被占用",duration:1500}),r.resetForm("form"))}</span>).catch(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >console.error(e)}</span>)}</span>)}</span>,resetForm:<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >this.$refs[e].resetFields()}</span>},created:<span class="fstat-no" title="function not covered" >fu</span>nction(){<span class="cstat-no" title="statement not covered" >sessionStorage.username&amp;&amp;this.$router.replace("/todo")}</span>},</span>a=<span class="cstat-no" title="statement not covered" >{render:<span class="fstat-no" title="function not covered" >fu</span>nction(){var e=<span class="cstat-no" title="statement not covered" >this,</span>r=<span class="cstat-no" title="statement not covered" >e.$createElement,</span>t=<span class="cstat-no" title="statement not covered" >e._self._c||r;<span class="cstat-no" title="statement not covered" ></span>return t("div",{staticClass:"register"},[t("el-form",{ref:"form",attrs:{"status-icon":"",rules:e.registerRules,model:e.form,"label-width":"80px"}},[t("el-form-item",{attrs:{label:"用户名",prop:"name"}},[t("el-input",{model:{value:e.form.name,callback:<span class="fstat-no" title="function not covered" >fu</span>nction(r){<span class="cstat-no" title="statement not covered" >e.$set(e.form,"name",r)}</span>,expression:"form.name"}})],1),e._v(" "),t("el-form-item",{attrs:{label:"密 码",prop:"pwd"}},[t("el-input",{attrs:{type:"password"},model:{value:e.form.pwd,callback:<span class="fstat-no" title="function not covered" >fu</span>nction(r){<span class="cstat-no" title="statement not covered" >e.$set(e.form,"pwd",r)}</span>,expression:"form.pwd"}})],1),e._v(" "),t("el-form-item",{attrs:{label:"确认密码",prop:"repwd"}},[t("el-input",{attrs:{type:"password"},model:{value:e.form.repwd,callback:<span class="fstat-no" title="function not covered" >fu</span>nction(r){<span class="cstat-no" title="statement not covered" >e.$set(e.form,"repwd",r)}</span>,expression:"form.repwd"}})],1),e._v(" "),t("div",{staticClass:"btns"},[t("el-button",{on:{click:<span class="fstat-no" title="function not covered" >fu</span>nction(r){<span class="cstat-no" title="statement not covered" >e.$router.push("/login")}</span>}},[e._v("取消注册")]),e._v(" "),t("el-button",{attrs:{type:"primary"},on:{click:<span class="fstat-no" title="function not covered" >fu</span>nction(r){<span class="cstat-no" title="statement not covered" >e.confirmRegister("form")}</span>}},[e._v("确认注册")])],1)],1)],1)}</span>,staticRenderFns:[]};</span>var i=<span class="cstat-no" title="statement not covered" >t("VU/8")(n,a,!1,<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >t("xM4l")}</span>,"data-v-f0d9d4a8",null);<span class="cstat-no" title="statement not covered" ></span>r.default=i.exports}</span>,xM4l:<span class="fstat-no" title="function not covered" >fu</span>nction(e,r){}});</span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 04 2018 14:25:28 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>

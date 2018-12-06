@@ -35,7 +35,6 @@ export default {
         this.detailTodo.status = res.data.todo.todoState
       })
       .catch(err => {
-        console.log(err)
         this.$message.error({ message: '事项详情获取失败', duration: 1500 })
         setTimeout(() => {
           this.$router.push('/todo')

@@ -12,7 +12,7 @@
     "prd": "pm2 start ./server/bin/www",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js",
-    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit"
+    "test": "cross-env NODE_ENV=test jest --detectOpenHandles --forceExit --runInBand"
   },
   "git": "git@github.com:MrElvin/vue-koa-demo.git",
   "dependencies": {
@@ -37,10 +37,13 @@
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.26",
     "autoprefixer": "^7.1.2",
+    "axios": "^0.18.0",
     "babel-core": "^6.22.1",
     "babel-eslint": "^8.2.1",
     "babel-helper-vue-jsx-merge-props": "^2.0.3",
+    "babel-jest": "^23.6.0",
     "babel-loader": "^7.1.1",
     "babel-plugin-component": "^1.1.1",
     "babel-plugin-syntax-jsx": "^6.18.0",
@@ -64,12 +67,16 @@
     "eslint-plugin-vue": "^4.0.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^1.1.4",
+    "flush-promises": "^1.0.2",
     "friendly-errors-webpack-plugin": "^1.6.1",
     "html-webpack-plugin": "^2.30.1",
     "jest": "^23.6.0",
+    "jest-localstorage-mock": "^2.3.0",
+    "jest-serializer-vue": "^2.0.2",
     "mockjs": "^1.0.1-beta3",
     "node-notifier": "^5.1.2",
-    "node-sass": "^4.9.0",
+    "node-sass": "^4.11.0",
+    "nodemon": "^1.8.1",
     "optimize-css-assets-webpack-plugin": "^3.2.0",
     "ora": "^1.2.0",
     "portfinder": "^1.0.13",
@@ -83,14 +90,14 @@
     "supertest": "^3.3.0",
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
+    "vue-jest": "^3.0.1",
     "vue-loader": "^13.3.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
     "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dev-server": "^2.9.1",
-    "webpack-merge": "^4.1.0",
-    "nodemon": "^1.8.1"
+    "webpack-merge": "^4.1.0"
   },
   "engines": {
     "node": ">= 6.0.0",

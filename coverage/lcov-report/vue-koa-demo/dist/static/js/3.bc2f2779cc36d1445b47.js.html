@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for vue-koa-demo/dist/static/js/3.bc2f2779cc36d1445b47.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../../prettify.css" />
+    <link rel="stylesheet" href="../../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../../index.html">All files</a> / <a href="index.html">vue-koa-demo/dist/static/js</a> 3.bc2f2779cc36d1445b47.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>0/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/19</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>0/1</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1</td><td class="line-coverage quiet"><span class="cline-any cline-no">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js"><span class="cstat-no" title="statement not covered" >webpackJsonp([3],{QDK0:<span class="fstat-no" title="function not covered" >fu</span>nction(e,t){},xJsL:<span class="fstat-no" title="function not covered" >fu</span>nction(e,t,r){"use strict";<span class="cstat-no" title="statement not covered" >Object.defineProperty(t,"__esModule",{value:!0});v</span>ar o=<span class="cstat-no" title="statement not covered" >r("OMN4"),</span>n=<span class="cstat-no" title="statement not covered" >r.n(o),</span>s=<span class="cstat-no" title="statement not covered" >{data:<span class="fstat-no" title="function not covered" >fu</span>nction(){var e=<span class="cstat-no" title="statement not covered" >this;<span class="cstat-no" title="statement not covered" ></span>return{form:{name:"",pwd:""},loginRules:{name:[{validator:<span class="fstat-no" title="function not covered" >fu</span>nction(t,r,o){<span class="cstat-no" title="statement not covered" >""===r?o(new Error("用户名不能为空")):n.a.post("/api/login/name",e.form).then(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >e.data.success?o():o(new Error("用户名不存在"))}</span>).catch(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >return console.log(e)}</span>)}</span>,trigger:"blur"}],pwd:[{validator:<span class="fstat-no" title="function not covered" >fu</span>nction(e,t,r){<span class="cstat-no" title="statement not covered" >""===t?r(new Error("密码不能为空")):r()}</span>,trigger:"blur"}]}}}</span>,methods:{login:<span class="fstat-no" title="function not covered" >fu</span>nction(){var e=<span class="cstat-no" title="statement not covered" >this;<span class="cstat-no" title="statement not covered" ></span>this.$refs.form.validate(<span class="fstat-no" title="function not covered" >fu</span>nction(t){<span class="cstat-no" title="statement not covered" >return t&amp;&amp;n.a.post("/api/login",e.form).then(<span class="fstat-no" title="function not covered" >fu</span>nction(t){<span class="cstat-no" title="statement not covered" >t.data.success?(e.$message({message:"登录成功 😛",type:"success",duration:1500}),setTimeout(<span class="fstat-no" title="function not covered" >fu</span>nction(){<span class="cstat-no" title="statement not covered" >e.$router.push("/todo")}</span>,1e3)):(e.$message.error({message:t.data.msg,duration:1500}),e.resetForm("form"))}</span>).catch(<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >console.log(e)}</span>),!1}</span>)}</span>,resetForm:<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >this.$refs[e].resetFields()}</span>},created:<span class="fstat-no" title="function not covered" >fu</span>nction(){<span class="cstat-no" title="statement not covered" >sessionStorage.username&amp;&amp;this.$router.replace("/todo")}</span>},</span>a=<span class="cstat-no" title="statement not covered" >{render:<span class="fstat-no" title="function not covered" >fu</span>nction(){var e=<span class="cstat-no" title="statement not covered" >this,</span>t=<span class="cstat-no" title="statement not covered" >e.$createElement,</span>r=<span class="cstat-no" title="statement not covered" >e._self._c||t;<span class="cstat-no" title="statement not covered" ></span>return r("div",{staticClass:"login"},[r("el-form",{ref:"form",attrs:{"status-icon":"",model:e.form,rules:e.loginRules,"label-width":"70px"}},[r("el-form-item",{attrs:{label:"用户名",prop:"name"}},[r("el-input",{model:{value:e.form.name,callback:<span class="fstat-no" title="function not covered" >fu</span>nction(t){<span class="cstat-no" title="statement not covered" >e.$set(e.form,"name",t)}</span>,expression:"form.name"}})],1),e._v(" "),r("el-form-item",{attrs:{label:"密 码",prop:"pwd"}},[r("el-input",{attrs:{type:"password"},model:{value:e.form.pwd,callback:<span class="fstat-no" title="function not covered" >fu</span>nction(t){<span class="cstat-no" title="statement not covered" >e.$set(e.form,"pwd",t)}</span>,expression:"form.pwd"}})],1),e._v(" "),r("div",{staticClass:"btns"},[r("el-button",{on:{click:<span class="fstat-no" title="function not covered" >fu</span>nction(t){<span class="cstat-no" title="statement not covered" >e.$router.push("/register")}</span>}},[e._v("注 册")]),e._v(" "),r("el-button",{attrs:{type:"primary"},on:{click:e.login}},[e._v("登 录")])],1)],1)],1)}</span>,staticRenderFns:[]};</span>var i=<span class="cstat-no" title="statement not covered" >r("VU/8")(s,a,!1,<span class="fstat-no" title="function not covered" >fu</span>nction(e){<span class="cstat-no" title="statement not covered" >r("QDK0")}</span>,"data-v-5b1586ff",null);<span class="cstat-no" title="statement not covered" ></span>t.default=i.exports}</span>});</span></pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Dec 04 2018 14:25:28 GMT+0800 (CST)
+</div>
+</div>
+<script src="../../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../../sorter.js"></script>
+</body>
+</html>
