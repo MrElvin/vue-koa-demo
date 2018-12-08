@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Detail.vue detail.vue snapshot test 1`] = `
+<div
+  class="detail"
+>
+  <el-form-stub
+    label-width="60px"
+    model="[object Object]"
+  >
+    <el-form-item-stub
+      label="时间"
+    >
+      <p
+        class="detail-date"
+      >
+        
+      </p>
+    </el-form-item-stub>
+     
+    <el-form-item-stub
+      label="内容"
+    >
+      <p
+        class="detail-content"
+      >
+        
+      </p>
+    </el-form-item-stub>
+     
+    <!---->
+     
+    <i />
+  </el-form-stub>
+</div>
+`;

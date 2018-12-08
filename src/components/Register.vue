@@ -62,30 +62,29 @@ export default {
     }
   },
   methods: {
-    confirmRegister (formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          axios.post('/api/register', this.form)
-            .then((res) => {
-              console.log(res)
-              if (res.data.success) {
-                this.$message({
-                  message: '注册成功，快去登录吧 😉',
-                  type: 'success',
-                  duration: 1500
-                })
-                setTimeout(() => {
-                  this.$router.push('/login')
-                }, 1000)
-              } else {
-                this.$message.error({
-                  message: '用户名已被占用',
-                  duration: 1500
-                })
-                this.resetForm('form')
-              }
+    async confirmRegister (formName) {
+      try {
+        const result = await this.$refs[formName].validate()
+        if (result) {
+          const res = await axios.post('/api/register', this.form)
+          if (res.data.success) {
+            this.$message({
+              message: '注册成功，快去登录吧 😉',
+              type: 'success',
+              duration: 1500
             })
-            .catch((err) => { console.error(err) })
+            setTimeout(() => {
+              this.$router.push('/login')
+            }, 1000)
+            return true
+          } else {
+            this.$message.error({
+              message: '用户名已被占用',
+              duration: 1500
+            })
+            this.resetForm('form')
+            return false
+          }
         } else {
           this.$message.error({
             message: '注册失败 😥',
@@ -93,7 +92,10 @@ export default {
           })
           return false
         }
-      })
+      } catch (err) {
+        console.log(err)
+        return false
+      }
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()

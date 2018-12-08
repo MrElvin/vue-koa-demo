@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login.vue login.vue snapshot test 1`] = `
+<div
+  class="login"
+>
+  <form
+    class="el-form"
+  >
+    <div
+      class="el-form-item el-form-item--feedback"
+    >
+      <label
+        class="el-form-item__label"
+        for="name"
+        style="width: 70px;"
+      >
+        用户名
+      </label>
+      <div
+        class="el-form-item__content"
+        style="margin-left: 70px;"
+      >
+        <div
+          class="el-input"
+        >
+          <!---->
+          <input
+            autocomplete="off"
+            class="el-input__inner"
+            type="text"
+          />
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="el-form-item el-form-item--feedback"
+    >
+      <label
+        class="el-form-item__label"
+        for="pwd"
+        style="width: 70px;"
+      >
+        密 码
+      </label>
+      <div
+        class="el-form-item__content"
+        style="margin-left: 70px;"
+      >
+        <div
+          class="el-input"
+        >
+          <!---->
+          <input
+            autocomplete="off"
+            class="el-input__inner"
+            type="password"
+          />
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="btns"
+    >
+      <button
+        class="el-button el-button--default"
+        type="button"
+      >
+        <!---->
+        <!---->
+        <span>
+          注 册
+        </span>
+      </button>
+       
+      <button
+        class="el-button el-button--primary"
+        type="button"
+      >
+        <!---->
+        <!---->
+        <span>
+          登 录
+        </span>
+      </button>
+    </div>
+  </form>
+</div>
+`;

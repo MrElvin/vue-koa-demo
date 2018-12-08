@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App.vue app.vue snapshot test 1`] = `
+<div
+  id="app"
+>
+  <todo-header-stub
+    username=""
+  />
+   
+  <router-view-stub />
+   
+  <todo-footer-stub />
+</div>
+`;

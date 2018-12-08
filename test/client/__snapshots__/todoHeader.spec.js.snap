@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Todoheader.vue todoHeader.vue snapshot test 1`] = `
+<div
+  class="todo-header"
+>
+  <div />
+   
+  <h1>
+    's todos
+  </h1>
+</div>
+`;

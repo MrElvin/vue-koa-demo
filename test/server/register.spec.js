@@ -2,11 +2,11 @@ import app from '../../server/app'
 import request from 'supertest'
 
 describe('Register Test', () => {
-  test('register ok if name is testuser and pwd is 654321', async () => {
+  test('register ok if name is testUser and pwd is 654321', async () => {
     const res = await request(app.callback())
       .post('/api/register')
       .send({
-        name: 'testuser',
+        name: 'testUser',
         pwd: '654321'
       })
     expect(res.body.success).toBe(true)

@@ -51,24 +51,24 @@ export default {
     }
   },
   methods: {
-    checkHasLogin () {
-      return axios.get('/api/login/hasLogin')
-        .then((res) => {
-          sessionStorage.username = res.data.msg
-          this.$emit('setUserName', { username: res.data.msg })
-          if (res.data.success) {
-            if (!sessionStorage.hasLogin) {
-              this.$message({ message: `你好呀 ${res.data.msg}!`, type: 'success', duration: 1500 })
-            }
-            sessionStorage.hasLogin = true
-            this.getTodoList(this.page, this.filterStatus, false)
-          } else {
-            this.$router.replace('/login')
+    async checkHasLogin () {
+      try {
+        const res = await axios.get('/api/login/hasLogin')
+        sessionStorage.username = res.data.msg
+        this.$emit('setUserName', { username: res.data.msg })
+        if (res.data.success) {
+          if (!sessionStorage.hasLogin) {
+            this.$message({ message: `你好呀 ${res.data.msg}!`, type: 'success', duration: 1500 })
           }
-        })
-        .catch((err) => {
+          sessionStorage.hasLogin = true
+          await this.getTodoList(this.page, this.filterStatus, false)
+        } else {
           this.$router.replace('/login')
-        })
+        }
+      } catch (err) {
+        console.log(err)
+        this.$router.replace('/login')
+      }
     },
     submitTodo () {
       if (this.todoToAdd.trim() === '') return
@@ -82,21 +82,21 @@ export default {
         })
         .catch(err => { console.log(err) })
     },
-    getTodoList (page = 1, filter = this.filterStatus, backToFirst) {
+    async getTodoList (page = 1, filter = this.filterStatus, backToFirst) {
       this.page = page
-      return axios.get(`/api/todo/get?page=${this.page}&filter=${filter}`)
-        .then(res => {
-          res.data.todoList.forEach(todo => {
-            todo.btnShow = false
-            todo.inputShow = false
-          })
-          this.todoList = res.data.todoList
-          this.todoTotal = res.data.todoTotal
-          if (backToFirst) this.page = 1
+      try {
+        const res = await axios.get(`/api/todo/get?page=${this.page}&filter=${filter}`)
+        res.data.todoList && res.data.todoList.forEach(todo => {
+          todo.btnShow = false
+          todo.inputShow = false
         })
-        .catch(err => {
-          this.$message.error({ message: '获取事项列表失败', duration: 1500 })
-        })
+        this.todoList = res.data.todoList
+        this.todoTotal = res.data.todoTotal
+        if (backToFirst) this.page = 1
+      } catch (err) {
+        console.log(err)
+        this.$message.error({ message: '获取事项列表失败', duration: 1500 })
+      }
     },
     completeTodo (item) {
       return axios.post(`/api/todo/done/${item._id}`, item)
@@ -108,6 +108,7 @@ export default {
           this.$message.error({ message: '操作事项失败', duration: 1500 })
         })
         .catch(err => {
+          console.log(err)
           this.$message.error({ message: '操作事项失败', duration: 1500 })
         })
     },

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Todofooter.vue todofooter.vue snapshot test 1`] = `
+<div
+  class="todo-footer"
+>
+  <footer>
+    vue-koa-todos by 
+    <span>
+      BreezyMelon
+    </span>
+  </footer>
+</div>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFound.vue notFound.vue snapshot test 1`] = `
+<div
+  class="notfound"
+>
+  <h1>
+    <strong>
+      404
+    </strong>
+     啊哈页面不见了
+  </h1>
+</div>
+`;

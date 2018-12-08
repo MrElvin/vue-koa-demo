@@ -1,0 +1,130 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Register.vue register.vue snapshot test 1`] = `
+<div
+  class="register"
+>
+  <form
+    class="el-form"
+  >
+    <div
+      class="el-form-item el-form-item--feedback is-required"
+    >
+      <label
+        class="el-form-item__label"
+        for="name"
+        style="width: 80px;"
+      >
+        用户名
+      </label>
+      <div
+        class="el-form-item__content"
+        style="margin-left: 80px;"
+      >
+        <div
+          class="el-input"
+        >
+          <!---->
+          <input
+            autocomplete="off"
+            class="el-input__inner"
+            type="text"
+          />
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="el-form-item el-form-item--feedback is-required"
+    >
+      <label
+        class="el-form-item__label"
+        for="pwd"
+        style="width: 80px;"
+      >
+        密 码
+      </label>
+      <div
+        class="el-form-item__content"
+        style="margin-left: 80px;"
+      >
+        <div
+          class="el-input"
+        >
+          <!---->
+          <input
+            autocomplete="off"
+            class="el-input__inner"
+            type="password"
+          />
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="el-form-item el-form-item--feedback is-required"
+    >
+      <label
+        class="el-form-item__label"
+        for="repwd"
+        style="width: 80px;"
+      >
+        确认密码
+      </label>
+      <div
+        class="el-form-item__content"
+        style="margin-left: 80px;"
+      >
+        <div
+          class="el-input"
+        >
+          <!---->
+          <input
+            autocomplete="off"
+            class="el-input__inner"
+            type="password"
+          />
+          <!---->
+          <!---->
+          <!---->
+        </div>
+        <!---->
+      </div>
+    </div>
+     
+    <div
+      class="btns"
+    >
+      <button
+        class="el-button el-button--default"
+        type="button"
+      >
+        <!---->
+        <!---->
+        <span>
+          取消注册
+        </span>
+      </button>
+       
+      <button
+        class="el-button el-button--primary"
+        type="button"
+      >
+        <!---->
+        <!---->
+        <span>
+          确认注册
+        </span>
+      </button>
+    </div>
+  </form>
+</div>
+`;

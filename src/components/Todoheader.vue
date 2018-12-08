@@ -31,6 +31,7 @@ export default {
           }
         })
         .catch((err) => {
+          console.log(err)
           this.$message.error({ message: '注销失败', duration: 1500 })
         })
     }

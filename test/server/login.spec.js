@@ -68,7 +68,7 @@ describe('Login Check Test', () => {
   test('user login if session.userName is exist', async () => {
     const res = await request(app.callback())
       .get('/api/login/hasLogin')
-      .set('cookie', 'koa:todo=eyJ1c2VyTmFtZSI6Imhpd29ybGQiLCJfZXhwaXJlIjoxNTQzNzM5NjU1ODkwLCJfbWF4QWdlIjo4NjQwMDAwMH0=; koa:todo.sig=Op3Ik5vbgl-IsFuGC8i_u6MRgyk')
+      .set('cookie', 'koa:todo=eyJ1c2VyTmFtZSI6ImFhYiIsIl9leHBpcmUiOjE1NDQzMzQ5NzA1NTMsIl9tYXhBZ2UiOjg2NDAwMDAwfQ==; koa:todo.sig=VSv55nf4ufEYX_4cDJ2yBd3p1_g')
     expect(res.body.success).toBe(true)
   })
 })

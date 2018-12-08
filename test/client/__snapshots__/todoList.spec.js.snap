@@ -1,0 +1,101 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TodoList.vue todoList.vue snapshot test 1`] = `
+<div
+  class="todo-container"
+>
+  <div
+    class="todo-input el-textarea"
+  >
+    <textarea
+      autofocus="autofocus"
+      class="el-textarea__inner"
+      placeholder="请输入待办事项，Ctrl + Enter 添加"
+      rows="2"
+      style="resize: none; min-height: NaNpx;"
+    />
+  </div>
+   
+  <div
+    class="state-btns"
+  >
+    <div
+      class="el-radio-group"
+      role="radiogroup"
+    >
+      <label
+        aria-checked="true"
+        class="el-radio-button el-radio-button--small is-active"
+        role="radio"
+        tabindex="0"
+      >
+        <input
+          class="el-radio-button__orig-radio"
+          tabindex="-1"
+          type="radio"
+          value="all"
+        />
+        <span
+          class="el-radio-button__inner"
+          style="background-color: rgb(102, 212, 235); border-color: #66d4eb; box-shadow: -1px 0 0 0 #66D4EB; color: rgb(255, 255, 255);"
+        >
+          全部
+          <!---->
+        </span>
+      </label>
+       
+      <label
+        class="el-radio-button el-radio-button--small"
+        role="radio"
+        tabindex="-1"
+      >
+        <input
+          class="el-radio-button__orig-radio"
+          tabindex="-1"
+          type="radio"
+          value="todo"
+        />
+        <span
+          class="el-radio-button__inner"
+        >
+          待完成
+          <!---->
+        </span>
+      </label>
+       
+      <label
+        class="el-radio-button el-radio-button--small"
+        role="radio"
+        tabindex="-1"
+      >
+        <input
+          class="el-radio-button__orig-radio"
+          tabindex="-1"
+          type="radio"
+          value="done"
+        />
+        <span
+          class="el-radio-button__inner"
+        >
+          已完成
+          <!---->
+        </span>
+      </label>
+    </div>
+  </div>
+   
+  <ul />
+   
+  <p
+    class="encourage"
+  >
+    空的日程列表
+  </p>
+   
+  <div
+    class="pagination-container"
+  >
+    <!---->
+  </div>
+</div>
+`;

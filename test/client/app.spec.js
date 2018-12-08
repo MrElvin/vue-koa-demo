@@ -6,10 +6,6 @@ describe('App.vue', () => {
   beforeEach(() => {
     sessionStorage.clear()
   })
-
-  /**
-   *  DATA TEST
-   */
   test('data.username should be sessionStorage.username: breezymelon', () => {
     const $router = { replace: jest.fn() }
     sessionStorage.__STORE__.username = 'breezymelon'
@@ -23,7 +19,6 @@ describe('App.vue', () => {
 
   test('data.username should be empty string', () => {
     const wrapper = shallowMount(App)
-
     expect(wrapper.vm.username).toBe('')
   })
 
@@ -32,7 +27,11 @@ describe('App.vue', () => {
       stubs: ['router-link', 'router-view']
     })
     wrapper.find(Todoheader).vm.$emit('setUserName', { username: 'breezymelon' })
-
     expect(wrapper.vm.username).toBe('breezymelon')
+  })
+
+  test('app.vue snapshot test', () => {
+    const wrapper = shallowMount(App)
+    expect(wrapper.element).toMatchSnapshot()
   })
 })

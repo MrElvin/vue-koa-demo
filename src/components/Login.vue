@@ -20,16 +20,13 @@ import axios from 'axios'
 
 export default {
   data () {
-    const validateUser = (rule, value, callback) => {
+    const validateUser = async (rule, value, callback) => {
       if (value === '') {
         callback(new Error('用户名不能为空'))
       } else {
-        axios.post('/api/login/name', this.form)
-          .then((res) => {
-            if (!res.data.success) callback(new Error('用户名不存在'))
-            else callback()
-          })
-          .catch((err) => console.log(err))
+        const res = await axios.post('/api/login/name', this.form)
+        if (!res.data.success) callback(new Error('用户名不存在'))
+        else callback()
       }
     }
     const validatePwd = (rule, value, callback) => {
@@ -51,25 +48,27 @@ export default {
     }
   },
   methods: {
-    login () {
-      this.$refs.form.validate((valid) => {
-        if (valid) {
-          axios.post('/api/login', this.form)
-            .then((res) => {
-              if (res.data.success) {
-                this.$message({ message: '登录成功 😛', type: 'success', duration: 1500 })
-                setTimeout(() => {
-                  this.$router.push('/todo')
-                }, 1000)
-              } else {
-                this.$message.error({ message: res.data.msg, duration: 1500 })
-                this.resetForm('form')
-              }
-            })
-            .catch((err) => { console.log(err) })
+    async login () {
+      try {
+        const result = await this.$refs.form.validate()
+        if (result) {
+          const res = await axios.post('/api/login', this.form)
+          if (res.data.success) {
+            this.$message({ message: '登录成功 😛', type: 'success', duration: 1500 })
+            setTimeout(() => {
+              this.$router.push('/todo')
+            }, 1000)
+            return true
+          } else {
+            this.$message.error({ message: res.data.msg, duration: 1500 })
+            this.resetForm('form')
+            return false
+          }
         }
+      } catch (err) {
+        console.log(err)
         return false
-      })
+      }
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
